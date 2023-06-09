@@ -5,7 +5,6 @@ call plug#begin()
 " Core
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/playground'
-Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -13,6 +12,7 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'dyng/ctrlsf.vim'
@@ -75,6 +75,9 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'HiPhish/nvim-ts-rainbow2'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': 'markdown' }
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
 call plug#end()
 " Main Configurations
 filetype plugin indent on
@@ -93,6 +96,8 @@ set number
 set title
 
 " Filetype-Specific Configurations
+
+let g:perl_host_prog = '/usr/bin/perl'
 
 augroup filetype_specific
     autocmd!
@@ -197,6 +202,7 @@ servers = {
     'clangd',
     'groovyls',
     'rust_analyzer',
+    'rls',
 }
 require("cspell-config")
 require('treesitter-config')
@@ -215,6 +221,9 @@ require('null-ls-config')
 require('scope-config')
 require('bufferline-config')
 require('vim-ai-config')
+require('rls-config')
+require('rust-anal-config')
+require('mason-config')
 EOF
 
 " Custom Functions
@@ -323,6 +332,34 @@ let chat_engine_config = {
 \    "initial_prompt": initial_prompt,
 \  },
 \}
+
+" NOTE: You can use other key to expand snippet.
+
+" Expand
+imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+
+" Expand or jump
+imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+" See https://github.com/hrsh7th/vim-vsnip/pull/50
+nmap        s   <Plug>(vsnip-select-text)
+xmap        s   <Plug>(vsnip-select-text)
+nmap        S   <Plug>(vsnip-cut-text)
+xmap        S   <Plug>(vsnip-cut-text)
+
+" If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
+let g:vsnip_filetypes = {}
+let g:vsnip_filetypes.javascriptreact = ['javascript']
+let g:vsnip_filetypes.typescriptreact = ['typescript']
 
 let g:vim_ai_complete = chat_engine_config
 let g:vim_ai_edit = chat_engine_config
