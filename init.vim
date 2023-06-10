@@ -9,6 +9,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-omni'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
@@ -51,6 +52,7 @@ Plug 'antoinemadec/FixCursorHold.nvim'
 " Functionalities - Python
 Plug 'psf/black', { 'branch': 'stable' }
 Plug 'heavenshell/vim-pydocstring'
+Plug 'jeetsukumaran/vim-pythonsense'
 
 " Aesthetics - Colorschemes
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -78,6 +80,18 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': 'm
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'rcarriga/nvim-notify'
+Plug 'liuchengxu/vista.vim', { 'on': 'Vista' }
+Plug 'SirVer/ultisnips', {'on': ['InsertEnter']}
+Plug 'honza/vim-snippets', {'after': 'ultisnips'}
+Plug 'simnalamburt/vim-mundo', { 'on': ['MundoToggle', 'MundoShow'] }
+Plug 'sbdchd/neoformat', {'on': ['Neoformat']}
+Plug 'rbong/vim-flog', {'on': ['Flog'], 'requires': 'tpope/vim-fugitive'}
+Plug 'christoomey/vim-conflicted', {'on': ['Conflicted'], 'requires': 'tpope/vim-fugitive'}
+Plug 'michaeljsmith/vim-indent-object', {'on': 'VimEnter'}
+Plug 'skywind3000/asyncrun.vim', {'on': ['AsyncRun'], 'for': 'vim'}
+Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
+Plug 'neomake/neomake'
 call plug#end()
 " Main Configurations
 filetype plugin indent on
@@ -224,6 +238,10 @@ require('vim-ai-config')
 require('rls-config')
 require('rust-anal-config')
 require('mason-config')
+require('nvim-notify-config')
+require('autocmd-config')
+
+require("fidget").setup{}
 EOF
 
 " Custom Functions
@@ -311,27 +329,23 @@ function! <SID>autosave()
   endif
 endfunction
 
-let initial_prompt =<< trim END
->>> system
+augroup dynamic_smartcase
+    autocmd!
+    autocmd CmdLineEnter : set nosmartcase
+    autocmd CmdLineLeave : set smartcase
+augroup END
 
-You are going to play a role of a completion engine with following parameters:
-Task: Provide compact code/text completion, generation, transformation or explanation
-Topic: general programming and text editing
-Style: Plain result without any commentary, unless commentary is necessary
-Audience: Users of text editor and programmers that need to transform/generate text
-END
+augroup term_settings
+    autocmd!
+    autocmd TermOpen * setlocal norelativenumber nonumber
+    autocmd TermOpen * startinsert
+augroup END
 
-let chat_engine_config = {
-\  "engine": "chat",
-\  "options": {
-\    "model": "gpt-3.5-turbo",
-\    "max_tokens": 1000,
-\    "temperature": 0.1,
-\    "request_timeout": 20,
-\    "selection_boundary": "",
-\    "initial_prompt": initial_prompt,
-\  },
-\}
+augroup accurate_syn_highlight
+  autocmd!
+  autocmd BufEnter * :syntax sync fromstart
+augroup END
+
 
 " NOTE: You can use other key to expand snippet.
 
@@ -361,7 +375,27 @@ let g:vsnip_filetypes = {}
 let g:vsnip_filetypes.javascriptreact = ['javascript']
 let g:vsnip_filetypes.typescriptreact = ['typescript']
 
+let initial_prompt ='>>> system
+  \ You are going to play a role of a completion engine with following parameters:
+  \ Task: Provide compact code/text completion, generation, transformation or explanation
+  \ Topic: general programming and text editing
+  \ Style: Plain result without any commentary, unless commentary is necessary
+  \ Audience: Users of text editor and programmers that need to transform/generate text'
+
+let chat_engine_config = {
+\  'engine': 'chat',
+\  'options': {
+\    'model': 'gpt-3.5-turbo',
+\    'max_tokens': 1000,
+\    'temperature': 0.1,
+\    'request_timeout': 20,
+\    'selection_boundary': '',
+\    'initial_prompt': initial_prompt,
+\  },
+\}
 let g:vim_ai_complete = chat_engine_config
 let g:vim_ai_edit = chat_engine_config
-
+call neomake#configure#automake('nrwi', 500)
+let g:nvimdev_auto_ctags = 1
+let g:nvimdev_auto_cscope = 1
 nnoremap <esc> :call <SID>autosave()<CR>
