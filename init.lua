@@ -7,7 +7,9 @@ local api = vim.api
 
 -- List with every config file
 local config_files = {
-  "plugins-config.lua"
+  "plugins-config.lua",
+  "globals.lua",
+  "autocommands.lua"
 }
 
 -- Source all config files
