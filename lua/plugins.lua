@@ -34,6 +34,8 @@ return require('packer').startup(function(use)
   use {"nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter"}
   use {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"}
   use {"nvim-treesitter/nvim-treesitter-context", after = "nvim-treesitter"}
+  use {'neovim/tree-sitter-vim', run = 'make' }
+  
   
   use {
     "nvim-treesitter/nvim-treesitter",

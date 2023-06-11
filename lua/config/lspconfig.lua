@@ -3,8 +3,8 @@
 local servers = {
   'pyright',
   'lua_ls',
-  'vim_ls',
-  'bash_ls',
+  'vimls',
+  'bashls',
   'html',
   'diagnosticls',
   'cssls',
