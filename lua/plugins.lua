@@ -1,22 +1,18 @@
 local api = vim.api
 local fn = vim.fn
 
--- Plugin home directory
-vim.g.plugin_home = fn.stdpath("data") .. "/site/pack/packer"
-
--- Function to check if packer is installed
-local function packer_ensure()
-  local packer_dir = vim.g.plugin_home .. "/opt/packer.nvim"
-  if fn.empty(fn.glob(install_dir)) > 0 then
-    vim.api.nvim_echo({ { "Installing packer.nvim", "Type" } }, true, {})
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_dir})
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
     vim.cmd [[packadd packer.nvim]]
     return true
   end
   return false
 end
 
-local packer_bootstrap = packer_ensure()
+local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
   
@@ -30,10 +26,25 @@ return require('packer').startup(function(use)
   use { "hrsh7th/cmp-omni", after = "nvim-cmp" }
   use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
   use { "quangnguyen30192/cmp-nvim-ultisnips", after = { "nvim-cmp", "ultisnips" } }
-  use { "neovim/nvim-lspconfig", after = "cmp-nvim-lsp", config = [[require('config.lsp')]] }
+  use { "neovim/nvim-lspconfig", after = "cmp-nvim-lsp", config = [[require('config.lspconfig')]] }
 
   use { "SirVer/ultisnips", event = "InsertEnter" }
   use { "honza/vim-snippets", after = "ultisnips" }
+  
+  use {"nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter"}
+  use {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"}
+  use {"nvim-treesitter/nvim-treesitter-context", after = "nvim-treesitter"}
+  
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    event = "BufEnter",
+    run = ":TSUpdate",
+    config = [[require('config.treesitter')]]
+  }
+
+  use { "Vimjas/vim-python-pep8-indent", ft = { "python" } }
+  use { "jeetsukumaran/vim-pythonsense", ft = { "python" } }
+  use { "machakann/vim-swap", event = "VimEnter" }
 
   if packer_bootstrap then
     require('packer').sync()

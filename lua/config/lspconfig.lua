@@ -1,5 +1,18 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local servers = {
+  'pyright',
+  'lua_ls',
+  'vim_ls',
+  'bash_ls',
+  'html',
+  'diagnosticls',
+  'cssls',
+  'clangd',
+  'groovyls',
+  'rust_analyzer',
+  'rls',
+}
 local opts = { noremap = true, silent = true }
 local api = vim.api
 local lsp = vim.lsp
@@ -129,12 +142,12 @@ lspconfig.lua_ls.setup {
   }
 
 function add_capabilities()
-	for _, lsp in ipairs(servers) do
-		require("lspconfig")[lsp].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-	end
+  for _, lsp in ipairs(servers) do
+    require("lspconfig")[lsp].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+  end
 end
 diagnostic.config {
   underline = false,
