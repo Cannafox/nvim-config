@@ -48,6 +48,33 @@ return require('packer').startup(function(use)
   use { "jeetsukumaran/vim-pythonsense", ft = { "python" } }
   use { "machakann/vim-swap", event = "VimEnter" }
 
+  use { "nvim-lua/plenary.nvim" }
+
+  use {
+      "nvim-telescope/telescope.nvim",
+      cmd = "Telescope",
+      requires = { { "nvim-lua/plenary.nvim" } },
+  }
+  use { "nvim-telescope/telescope-symbols.nvim", after = "telescope.nvim" }
+  use {
+      "ruifm/gitlinker.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      event = "User InGitRepo",
+      config = [[require('config.git-linker')]],
+  }
+  use { "tpope/vim-fugitive", event = "User InGitRepo", config = [[require('config.fugitive')]] }
+
+  -- Better git log display
+  use { "rbong/vim-flog", requires = "tpope/vim-fugitive", cmd = { "Flog" } }
+
+  use { "christoomey/vim-conflicted", requires = "tpope/vim-fugitive", cmd = { "Conflicted" } }
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    config = [[require('config.null-ls')]],
+    requires = { "nvim-lua/plenary.nvim" },
+  })
+  
+
   if packer_bootstrap then
     require('packer').sync()
   end
