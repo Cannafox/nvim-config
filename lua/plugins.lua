@@ -133,7 +133,7 @@ return require('packer').startup(function(use)
   use {'j-hui/fidget.nvim'}
   use {'neomake/neomake'}
   use {'sakhnik/nvim-gdb', run = ':!./install.sh' }
-
+  use {'junegunn/rainbow_parentheses.vim'}
   if packer_bootstrap then
     require('packer').sync()
   end

@@ -9,6 +9,32 @@ aucmd('TextYankPost', {
   end
 })
 
+augrp('RestoreAfterYank', {clear = true})
+aucmd("TextYankPost", {
+  pattern = "*",
+  group = 'RestoreAfterYank',
+  callback = function()
+    vim.cmd([[
+      silent! normal! `y
+      silent! delmarks y
+    ]])
+  end,
+})
+
+augrp('SaveOnExit', {clear = true})
+aucmd({'InsertLeave', 'FocusLost'}, {
+  group = 'SaveOnExit',
+  callback = function()
+    vim.cmd([[ call <SID>autosave() ]])
+  end
+})
+aucmd({'CursorHold'}, {
+  group = 'SaveOnExit',
+  callback = function()
+    vim.cmd([[ silent! checktime ]])
+  end
+})
+
 augrp('TrailSpaceOnSave', {clear = true})
 aucmd('BufWritePre', {
   group = 'TrailSpaceOnSave',
@@ -68,4 +94,15 @@ aucmd('BufLeave', {
   group = 'termLeave',
   pattern = 'term://*',
   command = 'stopinsert'
+})
+augrp('pythonRelated', { clear = true })
+aucmd('Filetype', {
+  group = 'pythonRelated',
+  pattern = 'python',
+  command = 'nmap <leader>d <Plug>(pydocstring)'
+})
+aucmd('Filetype', {
+  group = 'pythonRelated',
+  pattern = 'python',
+  command = 'nmap <leader>p :Black<CR>'
 })

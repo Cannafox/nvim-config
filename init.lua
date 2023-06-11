@@ -9,7 +9,10 @@ local api = vim.api
 local config_files = {
   "plugins-config.lua",
   "globals.lua",
-  "autocommands.lua"
+  "autocommands.lua",
+  "mappings.lua",
+  "options.lua",
+  "functions.lua"
 }
 
 -- Source all config files
