@@ -21,7 +21,19 @@ local packer_bootstrap = packer_ensure()
 return require('packer').startup(function(use)
   
   use 'wbthomason/packer.nvim'
-  
+  use { "onsails/lspkind-nvim", event = "VimEnter" }
+  use { "hrsh7th/nvim-cmp", after = "lspkind-nvim", config = [[require('config.nvim-cmp')]] }
+  use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-path", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-omni", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
+  use { "quangnguyen30192/cmp-nvim-ultisnips", after = { "nvim-cmp", "ultisnips" } }
+  use { "neovim/nvim-lspconfig", after = "cmp-nvim-lsp", config = [[require('config.lsp')]] }
+
+  use { "SirVer/ultisnips", event = "InsertEnter" }
+  use { "honza/vim-snippets", after = "ultisnips" }
 
   if packer_bootstrap then
     require('packer').sync()
