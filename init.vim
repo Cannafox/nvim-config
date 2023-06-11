@@ -92,8 +92,47 @@ Plug 'michaeljsmith/vim-indent-object', {'on': 'VimEnter'}
 Plug 'skywind3000/asyncrun.vim', {'on': ['AsyncRun'], 'for': 'vim'}
 Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'neomake/neomake'
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 call plug#end()
 " Main Configurations
+"
+" Styled and colored underline support
+set mouse=a
+set t_AU = "\e[58:5:%dm"
+set t_8u = "\e[58:2:%lu:%lu:%lum"
+set t_Us = "\e[4:2m"
+set t_Cs = "\e[4:3m"
+set t_ds = "\e[4:4m"
+set t_Ds = "\e[4:5m"
+set t_Ce = "\e[4:0m"
+" Strikethrough
+set t_Ts = "\e[9m"
+set t_Te = "\e[29m"
+" Truecolor support
+set t_8f = "\e[38:2:%lu:%lu:%lum"
+set t_8b = "\e[48:2:%lu:%lu:%lum"
+set t_RF = "\e]10;?\e\\"
+set t_RB = "\e]11;?\e\\"
+" Bracketed paste
+set t_BE = "\e[?2004h"
+set t_BD = "\e[?2004l"
+set t_PS = "\e[200~"
+set t_PE = "\e[201~"
+" Cursor control
+set t_RC = "\e[?12$p"
+set t_SH = "\e[%d q"
+set t_RS = "\eP$q q\e\\"
+set t_SI = "\e[5 q"
+set t_SR = "\e[3 q"
+set t_EI = "\e[1 q"
+set t_VS = "\e[?12l"
+" Focus tracking
+set t_fe = "\e[?1004h"
+set t_fd = "\e[?1004l"
+" Window title
+set t_ST = "\e[22;2t"
+set t_RT = "\e[23;2t"
+set t_ut=''
 filetype plugin indent on
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab autoindent
 set incsearch ignorecase smartcase hlsearch
@@ -399,3 +438,15 @@ call neomake#configure#automake('nrwi', 500)
 let g:nvimdev_auto_ctags = 1
 let g:nvimdev_auto_cscope = 1
 nnoremap <esc> :call <SID>autosave()<CR>
+
+let g:dashboard_custom_header = [
+\'             ／＞　 フ',
+\'            | 　_　_|  miau.',
+\'          ／` ミ＿xノ',
+\'         /　　　 |',
+\'        /　 ヽ　ﾉ',
+\'        │　　| ||   MIAU   ╱|、',
+\'   ／￣|　　 | ||        (˚ˎ 。7',
+\'  ( ￣ヽ＿_ヽ_)__)        |、˜〵',
+\'   ＼二)                  じしˍ,)ノ',
+\   ]
