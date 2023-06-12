@@ -55,7 +55,7 @@ return require('packer').startup(function(use)
   }
   use { "nvim-telescope/telescope-symbols.nvim", after = "telescope.nvim" }
   use {"nvim-telescope/telescope-fzf-native.nvim", run = "make" }
-  use {'tiagovla/scope.nvim'}
+  use {'tiagovla/scope.nvim', config = [[require('config.scope')]] }
   use {
     "ruifm/gitlinker.nvim",
     requires = "nvim-lua/plenary.nvim",
@@ -139,6 +139,11 @@ return require('packer').startup(function(use)
   use { "tmux-plugins/vim-tmux", ft = { "tmux" } }
   use { "machakann/vim-sandwich", event = "VimEnter" }
   use { "Raimondi/delimitMate", event = "InsertEnter" }
+  use {
+    'norcalli/nvim-colorizer.lua',
+    event = "BufEnter",
+    config = [[ require('config.colorizer') ]]
+  }
 
   if packer_bootstrap then
     require('packer').sync()
