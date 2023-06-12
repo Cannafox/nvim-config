@@ -21,20 +21,6 @@ aucmd("TextYankPost", {
   end,
 })
 
-augrp('SaveOnExit', {clear = true})
-aucmd({'InsertLeave', 'FocusLost'}, {
-  group = 'SaveOnExit',
-  callback = function()
-    vim.cmd([[ call <SID>autosave() ]])
-  end
-})
-aucmd({'CursorHold'}, {
-  group = 'SaveOnExit',
-  callback = function()
-    vim.cmd([[ silent! checktime ]])
-  end
-})
-
 augrp('TrailSpaceOnSave', {clear = true})
 aucmd('BufWritePre', {
   group = 'TrailSpaceOnSave',
@@ -105,4 +91,18 @@ aucmd('Filetype', {
   group = 'pythonRelated',
   pattern = 'python',
   command = 'nmap <leader>p :Black<CR>'
+})
+augrp('dynamic_smartcase', { clear = true })
+aucmd('CmdLineEnter', {
+  group = 'dynamic_smartcase',
+  command = 'set nosmartcase'
+})
+aucmd('CmdLineLeave', {
+  group = 'dynamic_smartcase',
+  command = 'set smartcase'
+})
+augrp('acc_syntax_hl', { clear = true })
+aucmd('BufEnter', {
+  group = 'acc_syntax_hl',
+  command = 'syntax sync fromstart'
 })

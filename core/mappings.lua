@@ -1,5 +1,6 @@
 local keymap = vim.keymap
 local api = vim.api
+local g = vim.g
 
 keymap.set({ "n", "x"}, ";", ":")
 
@@ -80,3 +81,12 @@ keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", {desc = "Telescope b
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", {desc = "Telescope help tags"})
 keymap.set("n", "<leader>fc", "<cmd>Telescope colorscheme<cr>", {desc = "Telescope colorscheme"})
 keymap.set("n", "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", {desc = "Telescope buffer fuzzy find"})
+
+g.UltiSnipsExpandTrigger="<tab>"
+g.UltiSnipsJumpForwardTrigger="<c-n>"
+g.UltiSnipsJumpBackwardTrigger="<c-p>"
+g.UltiSnipsEnableSnipMate = 1
+g.UltiSnipsSnippetDirectories={'UltiSnips', 'my_snippets'}
+
+keymap.set("n", "<space>s", ":ASToggle<CR>", {desc = "Toggle auto save"})
+

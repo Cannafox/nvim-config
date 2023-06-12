@@ -26,7 +26,7 @@ return require('packer').startup(function(use)
   use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
   use { "quangnguyen30192/cmp-nvim-ultisnips", after = { "nvim-cmp", "ultisnips" } }
   use { "neovim/nvim-lspconfig", after = "cmp-nvim-lsp", config = [[require('config.lspconfig')]] }
-
+  use { "gelguy/wilder.nvim", opt = true, setup = [[vim.cmd('packadd wilder.nvim')]] }
   use { "SirVer/ultisnips", event = "InsertEnter" }
   use { "honza/vim-snippets", after = "ultisnips" }
 
@@ -125,7 +125,7 @@ return require('packer').startup(function(use)
   }
   use {"williamboman/mason-lspconfig.nvim"}
   use {'rcarriga/nvim-notify', config=[[require('config.nvim-notify')]]}
-  use {'liuchengxu/vista.vim', cmd = 'Vista' }
+  use {'liuchengxu/vista.vim'}
   use {'simnalamburt/vim-mundo', cmd = {'MundoToggle', 'MundoShow'} }
   use {'sbdchd/neoformat', cmd = 'Neoformat'}
   use {'michaeljsmith/vim-indent-object', event = 'VimEnter'}
@@ -134,6 +134,12 @@ return require('packer').startup(function(use)
   use {'neomake/neomake'}
   use {'sakhnik/nvim-gdb', run = ':!./install.sh' }
   use {'junegunn/rainbow_parentheses.vim'}
+  use {'Pocco81/auto-save.nvim', config = [[require('config.auto-save')]] }
+  use { "andymass/vim-matchup", event = "VimEnter" }
+  use { "tmux-plugins/vim-tmux", ft = { "tmux" } }
+  use { "machakann/vim-sandwich", event = "VimEnter" }
+  use { "Raimondi/delimitMate", event = "InsertEnter" }
+
   if packer_bootstrap then
     require('packer').sync()
   end
