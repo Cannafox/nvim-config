@@ -85,6 +85,8 @@ cmp.setup({
         { name = 'path', option = { trailing_slash = true }},
         { name = 'nvim_lsp_signature_help' },
         { name = 'buffer', keyword_length = 2},
+        { name = 'buffer-lines'},
+        { name = 'calc'},
     },
     view = {
       entries = "custom",
