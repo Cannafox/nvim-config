@@ -150,14 +150,17 @@ function add_capabilities()
   end
 end
 diagnostic.config {
-  underline = false,
-  virtual_text = false,
+  underline = true,
+  virtual_text = true,
   signs = true,
   severity_sort = true,
 }
+fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
+fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn" })
+fn.sign_define("DiagnosticSignInformation", { text = "", texthl = "DiagnosticSignInfo" })
+fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
 lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
 add_capabilities()
-
 

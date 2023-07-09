@@ -1,12 +1,14 @@
-function TransparentBackground()
-  vim.api.nvim_set_hl(0, 'Normal', {guibg="NONE", ctermbg="NONE"})
-  vim.api.nvim_set_hl(0, 'LineNr', {guibg="NONE", ctermbg="NONE"})
-  vim.opt.fillchars:append({"vert:│"})
-  vim.api.nvim_set_hl(0, 'WinSeparator', {gui="NONE", guibg="NONE", ctermbg="NONE", cterm="NONE", guifg="#ca7986", ctermfg="gray"})
-  vim.api.nvim_set_hl(0, 'VertSplit', {gui="NONE", guibg="NONE", ctermbg="NONE", cterm="NONE", guifg="#ca7986", ctermfg="gray"})
-end
 
-vim.cmd([[ 
+
+-- function TransparentBackground()
+--   vim.api.nvim_set_hl(0, 'Normal', {guibg="NONE", ctermbg="NONE"})
+--   vim.api.nvim_set_hl(0, 'LineNr', {guibg="NONE", ctermbg="NONE"})
+--   vim.opt.fillchars:append({"vert:│"})
+--   vim.api.nvim_set_hl(0, 'WinSeparator', {gui="NONE", guibg="NONE", ctermbg="NONE", cterm="NONE", guifg="#ca7986", ctermfg="gray"})
+--   vim.api.nvim_set_hl(0, 'VertSplit', {gui="NONE", guibg="NONE", ctermbg="NONE", cterm="NONE", guifg="#ca7986", ctermfg="gray"})
+-- end
+
+vim.cmd([[
   call timer_start(250, { -> s:wilder_init() })
 
   function! s:wilder_init() abort
@@ -36,13 +38,9 @@ vim.cmd([[
           \   ),
           \ ])
 
-      let l:hl = wilder#make_hl('WilderAccent', 'Pmenu', [{}, {}, {'foreground': '#f4468f'}])
       call wilder#set_option('renderer', wilder#popupmenu_renderer({
           \ 'highlighter': wilder#basic_highlighter(),
           \ 'max_height': 15,
-          \ 'highlights': {
-          \   'accent': l:hl,
-          \ },
           \ 'left': [' ', wilder#popupmenu_devicons(),],
           \ 'right': [' ', wilder#popupmenu_scrollbar(),],
           \ 'apply_incsearch_fix': 0,

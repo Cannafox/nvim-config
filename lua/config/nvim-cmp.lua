@@ -1,47 +1,15 @@
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
-local kind_icons = {
-    Text = "",
-    Method = "",
-    Function = "",
-    Constructor = "",
-    Field = "",
-    Variable = "",
-    Class = "ﴯ",
-    Interface = "",
-    Module = "",
-    Property = "ﰠ",
-    Unit = "",
-    Value = "",
-    Enum = "",
-    Keyword = "",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "",
-    EnumMember = "",
-    Constant = "",
-    Struct = "",
-    Event = "",
-    Operator = "",
-    TypeParameter = ""
-}
-
 local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
 cmp.setup({
     snippet = {
         expand = function(args)
-            vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+            vim.fn["UltiSnips#Anon"](args.body)
         end,
     },
     window = {
@@ -84,7 +52,7 @@ cmp.setup({
         { name = 'ultisnips' },
         { name = 'path', option = { trailing_slash = true }},
         { name = 'nvim_lsp_signature_help' },
-        { name = 'buffer', keyword_length = 2},
+        { name = 'buffer', keyword_length = 5},
         { name = 'buffer-lines'},
         { name = 'calc'},
     },
@@ -156,4 +124,6 @@ vim.cmd([[
   highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
   highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
   highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
+  highlight! link FloatBorder Normal
+  highlight! link NormalFloat Normal
 ]])

@@ -1,4 +1,9 @@
 local set = vim.opt
+local g = vim.g
+
+g.mapleader = ','
+g.maplocalleader = ','
+
 set.termguicolors = true
 set.tabstop = 4
 set.softtabstop = 4
@@ -9,21 +14,21 @@ set.autoindent = true
 set.incsearch = true
 set.ignorecase = true
 set.smartcase = true
-set.hlsearch = true
+set.hlsearch = false
 set.wildmode = {'longest', 'list', 'full'}
 set.wildmenu = true
-set.ruler = false
+set.ruler = true
 set.laststatus = 2
 set.showcmd = true
 set.showmode = true
 set.list = true
 set.listchars = {
-  eol = '⤶',
-  trail = '❤',
-  extends = '◀',
-  precedes = '▶',
+  eol = '󱞦',
+  trail = '󱑼',
+  extends = '',
+  precedes = '',
 }
-set.wrap = false
+set.wrap = true
 set.breakindent = true
 set.encoding = 'utf-8'
 vim.scriptencoding = 'utf-8'
@@ -33,38 +38,68 @@ set.number = true
 set.relativenumber = true
 set.title = true
 
-vim.g['vista#renderer#icons'] = {member = ''}
+g['vista#renderer#icons'] = {member = ''}
+g['rainbow#blacklist'] = {233, 234}
+g['rainbow#max_level'] = 16
+g['rainbow#pairs'] = {{'(', ')'}, {'[', ']'}}
 
-vim.g.vista_echo_cursor = 1
-vim.g.vista_stay_on_open = 1
-vim.g.neoformat_enabled_python = {'black', 'yapf'}
-vim.g.neoformat_cpp_clangformat = {
+g.vista_echo_cursor = true
+g.vista_stay_on_open = true
+g.neoformat_enabled_python = {'black', 'yapf'}
+g.neoformat_cpp_clangformat = {
       exe = 'clang-format',
       args = {'--style="{IndentWidth: 4}"'}
 }
-vim.g.neoformat_c_clangformat = {
+g.neoformat_c_clangformat = {
       exe = 'clang-format',
       args = {'--style="{IndentWidth: 4}"'}
 }
 
-vim.g.neoformat_enabled_cpp = {'clangformat'}
-vim.g.neoformat_enabled_c = {'clangformat'}
+g.neoformat_enabled_cpp = {'clangformat'}
+g.neoformat_enabled_c = {'clangformat'}
 
-vim.g.vim_markdown_folding_disabled = 1
-vim.g.vim_markdown_conceal = 1
-vim.g.vim_markdown_math = 0
-vim.g.vim_markdown_frontmatter = 1
-vim.g.vim_markdown_toml_frontmatter = 1
-vim.g.vim_markdown_json_frontmatter = 1
-vim.g.vim_markdown_toc_autofit = 1
+g.vim_markdown_folding_disabled = true
+g.vim_markdown_conceal = true
+g.vim_markdown_math = false
+g.vim_markdown_frontmatter = true
+g.vim_markdown_toml_frontmatter = true
+g.vim_markdown_json_frontmatter = true
+g.vim_markdown_toc_autofit = true
 
-vim.g.matchup_matchparen_deferred = 1
-vim.g.matchup_matchparen_timeout = 100
-vim.g.matchup_matchparen_insert_timeout = 30
+g.matchup_matchparen_deferred = true
+g.matchup_matchparen_timeout = 100
+g.matchup_matchparen_insert_timeout = 30
 
-vim.g.matchup_override_vimtex = 1
+g.matchup_override_vimtex = true
 
-vim.g.matchup_delim_noskips = 0
+g.matchup_delim_noskips = false
 
-vim.g.matchup_matchparen_offscreen = {method = 'popup'}
-vim.g.asyncrun_open = 4
+g.matchup_matchparen_offscreen = {method = 'popup'}
+g.asyncrun_open = 4
+g.indentLine_defaultGroup = 'NonText'
+g.vim_json_syntax_conceal = false
+g.vim_markdown_syntax_conceal = false
+g.vim_markdown_conceal_code_blocks = false
+g.cursorhold_updatetime = 100
+g.context_nvim_no_redraw = true
+g.UltiSnipsSnippetDirectories = {'UltiSnips', 'my_snippets'}
+set.completeopt = {'menu', 'menuone', 'noselect'}
+
+set.matchpairs:append({"<:>","「:」","『:』","【:】","“:”","‘:’","《:》"})
+
+set.fileencodings= {"utf-8", "ucs-bom","utf-8","cp936","gb18030","big5","euc-jp","euc-kr","latin1"}
+
+set.linebreak = true
+
+set.scrolloff = 3
+set.undofile = true
+set.pumheight = 10
+set.pumblend = 10
+set.winblend = 0
+set.spelllang = {'en', 'pl'}
+set.shiftround = true
+set.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
+set.grepformat='%f:%l:%c:%m'
+
+set.diffopt = 'vertical,filler,closeoff,context:3,internal,indent-heuristic,algorithm:histogram,linematch:60'
+

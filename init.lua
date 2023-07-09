@@ -7,11 +7,11 @@ local api = vim.api
 
 -- List with every config file
 local config_files = {
+  "colors.lua",
   "plugins-config.lua",
   "globals.lua",
   "autocommands.lua",
   "mappings.lua",
-  "options.lua",
   "functions.lua"
 }
 

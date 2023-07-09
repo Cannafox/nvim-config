@@ -1,3 +1,4 @@
+local set = vim.opt
 local api = vim.api
 local fn = vim.fn
 
@@ -13,14 +14,18 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
-
-return require('packer').startup(function(use)
+local packer = require("packer")
+packer.startup({function(use)
+  use { "folke/neoconf.nvim", cmd = "Neoconf"}
+  use {"folke/neodev.nvim"}
   use { "wbthomason/packer.nvim" }
   use { "onsails/lspkind-nvim", event = "VimEnter" }
   use { "hrsh7th/nvim-cmp", after = "lspkind-nvim", config = [[require('config.nvim-cmp')]] }
   use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }
   use { "hrsh7th/cmp-path", after = "nvim-cmp" }
   use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
+  use { "hrsh7th/cmp-calc", after = "nvim-cmp" }
+  -- use { "amarakon/nvim-cmp-buffer-lines", after = "nvim-cmp", config = [[require('config.nvim-cmp-buffer-lines')]] }
   use { "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
   use { "hrsh7th/cmp-omni", after = "nvim-cmp" }
   use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
@@ -79,6 +84,7 @@ return require('packer').startup(function(use)
     requires = 'junegunn/fzf',
     run = ':call fzf#install()'
   }
+  use { 'folke/trouble.nvim', requires = "nvim-tree/nvim-web-devicons"}
   use {
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
@@ -144,8 +150,26 @@ return require('packer').startup(function(use)
     event = "BufEnter",
     config = [[ require('config.colorizer') ]]
   }
+  -- use { 'mhinz/vim-signify' }
+
+  use { 'ii14/emmylua-nvim'}
 
   if packer_bootstrap then
     require('packer').sync()
   end
-end)
+end,
+config = {
+    max_jobs = 16,
+  },
+})
+api.nvim_create_augroup("PackerAutoCompile", {clear = true})
+api.nvim_create_autocmd({"BufWritePost"}, {
+  pattern = "*.config/nvim/*",
+  group = "PackerAutoCompile",
+  callback = function(ctx)
+    local cmd = "source " .. ctx.file
+    vim.cmd(cmd)
+    vim.cmd("PackerCompile")
+    vim.notify("PackerCompile done!", vim.log.levels.INFO, {title = "nvim-config"})
+  end,
+})

@@ -43,8 +43,8 @@ nvim_tree.setup {
     auto_open = true,
   },
   update_focused_file = {
-    enable = false,
-    update_cwd = false,
+    enable = true,
+    update_cwd = true,
     ignore_list = {},
   },
   system_open = {
@@ -52,7 +52,7 @@ nvim_tree.setup {
     args = {},
   },
   diagnostics = {
-    enable = false,
+    enable = true,
     show_on_dirs = false,
     icons = {
       hint = "",
