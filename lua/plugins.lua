@@ -1,19 +1,5 @@
-local set = vim.opt
 local api = vim.api
-local fn = vim.fn
 
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
-end
-
-local packer_bootstrap = ensure_packer()
 local packer = require("packer")
 packer.startup({function(use)
   use { "folke/neoconf.nvim", cmd = "Neoconf"}
@@ -153,10 +139,7 @@ packer.startup({function(use)
   -- use { 'mhinz/vim-signify' }
 
   use { 'ii14/emmylua-nvim'}
-
-  if packer_bootstrap then
-    require('packer').sync()
-  end
+  use { "catppuccin/nvim", as="catppuccin", config= [[require('config.catppuccin')]]}
 end,
 config = {
     max_jobs = 16,
@@ -164,7 +147,7 @@ config = {
 })
 api.nvim_create_augroup("PackerAutoCompile", {clear = true})
 api.nvim_create_autocmd({"BufWritePost"}, {
-  pattern = "*.config/nvim/*",
+  pattern = {"*.config/nvim/lua/plugins.lua","*init.lua"},
   group = "PackerAutoCompile",
   callback = function(ctx)
     local cmd = "source " .. ctx.file

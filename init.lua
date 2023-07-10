@@ -4,11 +4,9 @@
 vim.loader.enable()
 
 local api = vim.api
-
+require('plugins')
 -- List with every config file
 local config_files = {
-  "colors.lua",
-  "plugins-config.lua",
   "globals.lua",
   "autocommands.lua",
   "mappings.lua",

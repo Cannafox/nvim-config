@@ -24,6 +24,7 @@ api.nvim_set_hl(0, 'LineNrBelow', {fg=colors.dusty_pink})
 api.nvim_set_hl(0, 'NonText', {fg=colors.dusty_pink})
 api.nvim_set_hl(0, 'Pmenu', {fg=colors.bright_pink, bg=colors.black})
 api.nvim_set_hl(0, 'PmenuSel', {fg=colors.black, bg=colors.dusty_pink})
+api.nvim_set_hl(0, 'SignColumn', {bg = colors.black})
 
 -- Git
 api.nvim_set_hl(0, 'GitSignsAdd', {fg=colors.green})
@@ -37,5 +38,3 @@ api.nvim_set_hl(0, 'DiagnosticSignError', {fg=colors.red})
 api.nvim_set_hl(0, 'DiagnosticSignWarn', {fg=colors.yellow})
 api.nvim_set_hl(0, 'DiagnosticSignInformation', {fg=colors.blue})
 api.nvim_set_hl(0, 'DiagnosticSignHint', {fg=colors.green})
-
-
