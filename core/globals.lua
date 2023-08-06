@@ -100,6 +100,9 @@ set.spelllang = {'en', 'pl'}
 set.shiftround = true
 set.grepprg = [[rg --hidden --glob "!.git" --no-heading --smart-case --vimgrep --follow $*]]
 set.grepformat='%f:%l:%c:%m'
+g.asyncrun_rootmarks = {'.svn', '.git', '.root', '.bzr', '_darcs', 'build.xml'}
+g.floaterm_width = 70
+g.floaterm_height = 20
 
 set.diffopt = 'vertical,filler,closeoff,context:3,internal,indent-heuristic,algorithm:histogram,linematch:60'
 

@@ -1,4 +1,5 @@
 local keymap = vim.keymap
+local fn = vim.fn
 local api = vim.api
 local g = vim.g
 
@@ -51,6 +52,16 @@ keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", {desc = "Telescope
 keymap.set("n", "<leader>fc", "<cmd>Telescope colorscheme<cr>", {desc = "Telescope colorscheme"})
 keymap.set("n", "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", {desc = "Telescope buffer fuzzy find"})
 
+keymap.set("n", "gaa", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git add . <cr>", {desc = "git add ."})
+keymap.set("n", "gcm", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git commit -m 'update $(VIM_FILEPATH)'<cr>", {desc = "git commit"})
+keymap.set("n", "gpp", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git push <cr>", {desc = "git push"})
+keymap.set("n", "gcb", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git checkout ", {desc = "git checkout"})
+keymap.set("n", "gcB", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git checkout -b ", {desc = "git checkout to new"})
+keymap.set("n", "gS", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git status <cr>", {desc = "git status"})
+
+keymap.set("n", "<leader>rp", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=$(VIM_FILEDIR) python $(VIM_FILEPATH)<cr>", {desc = "Run python"})
+keymap.set("n", "<Tab>", "<cmd>bnext<cr>")
+keymap.set("n", "<S-Tab>", "<cmd>bprev<cr>")
 g.UltiSnipsExpandTrigger="<tab>"
 g.UltiSnipsJumpForwardTrigger="<c-n>"
 g.UltiSnipsJumpBackwardTrigger="<c-p>"

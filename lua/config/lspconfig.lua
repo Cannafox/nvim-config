@@ -149,9 +149,9 @@ function add_capabilities()
   end
 end
 diagnostic.config {
-  underline = true,
+  underline = false,
   virtual_text = {
-    severity = { min = diagnostic.severity.WARN },
+    severity = { min = diagnostic.severity.ERROR },
   },
   signs = true,
   severity_sort = true,

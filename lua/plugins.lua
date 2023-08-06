@@ -37,7 +37,6 @@ packer.startup({function(use)
   use { "machakann/vim-swap", event = "VimEnter" }
 
   use { "nvim-lua/plenary.nvim" }
-  use {'davidmh/cspell.nvim'}
   use {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
@@ -129,17 +128,26 @@ packer.startup({function(use)
   use {'Pocco81/auto-save.nvim', config = [[require('config.auto-save')]] }
   use { "andymass/vim-matchup", event = "VimEnter" }
   use { "tmux-plugins/vim-tmux", ft = { "tmux" } }
-  use { "machakann/vim-sandwich", event = "VimEnter" }
   use { "Raimondi/delimitMate", event = "InsertEnter" }
   use {
     'norcalli/nvim-colorizer.lua',
     event = "BufEnter",
     config = [[ require('config.colorizer') ]]
   }
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
+})
   -- use { 'mhinz/vim-signify' }
 
   use { 'ii14/emmylua-nvim'}
   use { "catppuccin/nvim", as="catppuccin", config= [[require('config.catppuccin')]]}
+  use { "voldikss/vim-floaterm"}
 end,
 config = {
     max_jobs = 16,
