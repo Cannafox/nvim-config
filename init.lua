@@ -6,16 +6,13 @@ vim.loader.enable()
 local api = vim.api
 require('plugins')
 -- List with every config file
-local config_files = {
-  "globals.lua",
-  "autocommands.lua",
-  "mappings.lua",
-  "functions.lua"
-}
+local config_files = vim.split(vim.fn.glob('~/.config/nvim/lua/core/*.lua'), '\n')
 
 -- Source all config files
-for _, name in ipairs(config_files) do
-  local config_file_path = string.format("%s/core/%s", vim.fn.stdpath("config"), name)
-  local source_cmd = "source " .. config_file_path
-  vim.cmd(source_cmd)
+for _, path in ipairs(config_files) do
+  config_file_path = vim.fn.split(path, '/')
+  file = string.gsub(config_file_path[#config_file_path], '%.lua?$', '')
+  if file ~= 'init' then
+    require('core.' .. file)
+  end
 end

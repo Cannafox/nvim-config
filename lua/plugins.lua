@@ -5,6 +5,7 @@ packer.startup({function(use)
   use { "folke/neoconf.nvim", cmd = "Neoconf"}
   use {"folke/neodev.nvim"}
   use { "wbthomason/packer.nvim" }
+  use {'mfussenegger/nvim-dap'}
   use { "onsails/lspkind-nvim", event = "VimEnter" }
   use { "hrsh7th/nvim-cmp", after = "lspkind-nvim", config = [[require('config.nvim-cmp')]] }
   use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }
@@ -22,8 +23,11 @@ packer.startup({function(use)
   use { "honza/vim-snippets", after = "ultisnips" }
 
   use {"nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter"}
+  use {"nvim-treesitter/playground", after = "nvim-treesitter"}
   use {"nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter"}
-  use {"nvim-treesitter/nvim-treesitter-context", after = "nvim-treesitter"}
+  use {"nvim-treesitter/nvim-treesitter-context", after = "nvim-treesitter", config=[[require('config.ts-context')]]}
+  use {'theHamsta/nvim-dap-virtual-text', after = "nvim-treesitter", config=[[require('config.nvim-dap-virt')]]}
+  use {"theHamsta/nvim-treesitter-pairs", after = "nvim-treesitter"}
   use {'neovim/tree-sitter-vim', run = 'make' }
   use {
     "nvim-treesitter/nvim-treesitter",
@@ -33,6 +37,7 @@ packer.startup({function(use)
   }
 
   use { "Vimjas/vim-python-pep8-indent", ft = "python" }
+
   use { "jeetsukumaran/vim-pythonsense", ft = "python" }
   use { "machakann/vim-swap", event = "VimEnter" }
 
@@ -40,11 +45,15 @@ packer.startup({function(use)
   use {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
-    requires = { { "nvim-lua/plenary.nvim" } },
+    requires = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+
+
+    },
     config = [[require('config.telescope')]]
   }
   use { "nvim-telescope/telescope-symbols.nvim", after = "telescope.nvim" }
-  use {"nvim-telescope/telescope-fzf-native.nvim", run = "make" }
   use {'tiagovla/scope.nvim', config = [[require('config.scope')]] }
   use {
     "ruifm/gitlinker.nvim",
@@ -80,7 +89,7 @@ packer.startup({function(use)
     event = "VimEnter",
     config = [[require('config.bufferline')]]
   }
-  use {'kyazdani42/nvim-web-devicons', event = 'VimEnter'}
+  use {'nvim-tree/nvim-web-devicons', event = 'VimEnter'}
   use {
     'kyazdani42/nvim-tree.lua',
     requires = 'nvim-tree/nvim-web-devicons',
@@ -123,8 +132,9 @@ packer.startup({function(use)
   use {'skywind3000/asyncrun.vim', cmd = 'AsyncRun', ft = 'vim'}
   use {'j-hui/fidget.nvim'}
   use {'neomake/neomake'}
-  use {'sakhnik/nvim-gdb', run = ':!./install.sh' }
-  use {'junegunn/rainbow_parentheses.vim'}
+  use {'sakhnik/nvim-gdb'}
+  -- use {'junegunn/rainbow_parentheses.vim'}
+  use {'HiPhish/rainbow-delimiters.nvim', config = [[require('config.rainbow')]]}
   use {'Pocco81/auto-save.nvim', config = [[require('config.auto-save')]] }
   use { "andymass/vim-matchup", event = "VimEnter" }
   use { "tmux-plugins/vim-tmux", ft = { "tmux" } }
@@ -148,6 +158,10 @@ packer.startup({function(use)
   use { 'ii14/emmylua-nvim'}
   use { "catppuccin/nvim", as="catppuccin", config= [[require('config.catppuccin')]]}
   use { "voldikss/vim-floaterm"}
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+  use { "nvim-telescope/telescope-file-browser.nvim", requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"}}
+  use { "tpope/vim-commentary"}
+
 end,
 config = {
     max_jobs = 16,

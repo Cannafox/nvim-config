@@ -26,8 +26,8 @@ vim.g.vim_ai_edit = {
 }
 vim.g.vim_ai_chat = {
   options = {
-    model = "gpt-3.5-turbo",
-    max_tokens = 1000,
+    model = "gpt-4",
+    max_tokens = 2000,
     temperature = 1,
     request_timeout = 20,
     selection_boundary = "",

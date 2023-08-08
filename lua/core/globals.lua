@@ -106,3 +106,11 @@ g.floaterm_height = 20
 
 set.diffopt = 'vertical,filler,closeoff,context:3,internal,indent-heuristic,algorithm:histogram,linematch:60'
 
+set.foldmethod="expr"
+set.foldexpr="nvim_treesitter#foldexpr()"
+set.foldenable=false
+
+vim.o.guifont = "Iosevka Nerd Font Mono:style=Regular:h18"
+g.neovide_profiler = false
+g.neovide_cursor_vfx_mode = "pixiedust"
+set.swapfile = false
