@@ -16,3 +16,4 @@ for _, path in ipairs(config_files) do
     require('core.' .. file)
   end
 end
+
