@@ -28,12 +28,6 @@ require('telescope').setup{
       override_file_sorter = true,
       case_mode = "smart_case",
     },
-    packer = {
-      theme = "ivy",
-      layout_config = {
-        height = .5
-      }
-    },
     file_browser = {
       theme = "ivy",
       -- disables netrw and use telescope-file-browser in its place
@@ -52,4 +46,4 @@ require('telescope').setup{
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('scope')
 require('telescope').load_extension('file_browser')
-require('telescope').load_extension('packer')
+-- require('telescope').load_extension('packer')

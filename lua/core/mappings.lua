@@ -3,6 +3,9 @@ local fn = vim.fn
 local api = vim.api
 local g = vim.g
 
+keymap.set("n", "<space>dW", "<cmd>lua require('diaglist').open_all_diagnostics()<cr>", { desc = "all diagnostics"})
+keymap.set("n", "<space>dw", "<cmd>lua require('diaglist').open_buffer_diagnostics()<cr>", { desc = "buffer diagnostics"})
+
 keymap.set("i", "<c-t>", "<Esc>b~lea", { desc = "current word to title case"})
 
 keymap.set("n", "[l", "<cmd>lprevious<cr>zv", { silent = true, desc = "previous location item" })
@@ -52,12 +55,11 @@ keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", {desc = "Telescope
 keymap.set("n", "<leader>fc", "<cmd>Telescope colorscheme<cr>", {desc = "Telescope colorscheme"})
 keymap.set("n", "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", {desc = "Telescope buffer fuzzy find"})
 
-keymap.set("n", "gaa", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git add . <cr>", {desc = "git add ."})
-keymap.set("n", "gcm", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git commit -m 'update $(VIM_FILEPATH)'<cr>", {desc = "git commit"})
-keymap.set("n", "gpp", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git push <cr>", {desc = "git push"})
-keymap.set("n", "gcb", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git checkout ", {desc = "git checkout"})
-keymap.set("n", "gcB", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git checkout -b ", {desc = "git checkout to new"})
-keymap.set("n", "gS", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=<root> git status <cr>", {desc = "git status"})
+keymap.set("n", "gaa", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git add .<cr>", {desc = "git add ."})
+keymap.set("n", "gpp", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git push<cr>", {desc = "git push"})
+keymap.set("n", "gcm", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git commit -m 'update $(VIM_FILEPATH)'<cr>", {desc = "git commit"})
+keymap.set("n", "gS", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git status<cr>", {desc = "git status"})
+keymap.set("n", "fid", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git diff<cr>", {desc = "git diff"})
 
 keymap.set("n", "<leader>rp", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=$(VIM_FILEDIR) python $(VIM_FILEPATH)<cr>", {desc = "Run python"})
 keymap.set("n", "<Tab>", "<cmd>bnext<cr>")
