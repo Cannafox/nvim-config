@@ -17,7 +17,7 @@ require("dashboard").setup {
             "╚════════════════════════════════════╝",
         },
         shortcut = {
-            { desc = ' Update', group = '@property', action = 'PackerSync', key = 'u' },
+            { desc = ' Plugins', group = '@property', action = 'Lazy', key = 'p' },
             {
               desc = ' Files',
               group = 'Label',
