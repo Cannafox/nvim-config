@@ -14,6 +14,7 @@ local servers = {
   "marksman",
   "pylsp",
   "yamlls",
+  "texlab",
 }
 local opts = { noremap = true, silent = true }
 local api = vim.api
@@ -89,8 +90,8 @@ lspconfig.pylsp.setup({
     pylsp = {
       plugins = {
         pylint = { enabled = true, executable = "pylint" },
-        pyflakes = { enabled = false },
-        pycodestyle = { enabled = false },
+        pyflakes = { enabled = true },
+        pycodestyle = { enabled = true },
         jedi_completion = { fuzzy = true },
         pyls_isort = { enabled = true },
         pylsp_mypy = { enabled = true },
@@ -158,6 +159,7 @@ lspconfig.lua_ls.setup({
     return true
   end,
 })
+lspconfig.texlab.setup({})
 
 function add_capabilities()
   for _, lsp in ipairs(servers) do

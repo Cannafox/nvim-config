@@ -210,7 +210,7 @@ _G.packer_plugins = {
     url = "https://github.com/Raimondi/delimitMate"
   },
   ["diaglist.nvim"] = {
-    config = { "\27LJ\2\nR\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\16debounce_ms\3–\1\ndebug\1\tinit\rdiaglist\frequire\0" },
+    config = { "\27LJ\2\nR\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\ndebug\1\16debounce_ms\3–\1\tinit\rdiaglist\frequire\0" },
     loaded = true,
     path = "/home/slave/.local/share/nvim/site/pack/packer/start/diaglist.nvim",
     url = "https://github.com/onsails/diaglist.nvim"
@@ -230,16 +230,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/slave/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
-  },
-  fzf = {
-    loaded = true,
-    path = "/home/slave/.local/share/nvim/site/pack/packer/start/fzf",
-    url = "https://github.com/junegunn/fzf"
-  },
-  ["fzf.vim"] = {
-    loaded = true,
-    path = "/home/slave/.local/share/nvim/site/pack/packer/start/fzf.vim",
-    url = "https://github.com/junegunn/fzf.vim"
   },
   ["gitlinker.nvim"] = {
     config = { "require('config.git-linker')" },
@@ -271,6 +261,11 @@ _G.packer_plugins = {
     path = "/home/slave/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
     url = "https://github.com/glepnir/lspsaga.nvim"
   },
+  ["lualine-lsp-progress"] = {
+    loaded = true,
+    path = "/home/slave/.local/share/nvim/site/pack/packer/start/lualine-lsp-progress",
+    url = "https://github.com/arkav/lualine-lsp-progress"
+  },
   ["lualine.nvim"] = {
     config = { "require('config.lualine')" },
     loaded = false,
@@ -292,6 +287,7 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason-lspconfig.nvim"
   },
   ["mason.nvim"] = {
+    config = { "require('config.mason')" },
     loaded = true,
     path = "/home/slave/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
@@ -312,7 +308,7 @@ _G.packer_plugins = {
     url = "https://github.com/neomake/neomake"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-nvim-ultisnips", "cmp-path", "cmp-buffer", "cmp-nvim-lua", "cmp-spell", "cmp-calc", "cmp-omni", "cmp-nvim-lsp-signature-help", "cmp-cmdline", "cmp-emoji", "cmp-look" },
+    after = { "cmp-nvim-lua", "cmp-nvim-ultisnips", "cmp-omni", "cmp-buffer", "cmp-look", "cmp-spell", "cmp-emoji", "cmp-nvim-lsp-signature-help", "cmp-calc", "cmp-cmdline", "cmp-path" },
     config = { "require('config.nvim-cmp')" },
     loaded = true,
     only_config = true,
@@ -370,7 +366,7 @@ _G.packer_plugins = {
     url = "https://github.com/kyazdani42/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
-    after = { "playground", "nvim-treesitter-refactor", "nvim-treesitter-pairs", "nvim-treesitter-context", "nvim-treesitter-textobjects", "nvim-dap-virtual-text" },
+    after = { "playground", "nvim-treesitter-textobjects", "nvim-treesitter-refactor", "nvim-treesitter-context", "nvim-dap-virtual-text", "nvim-treesitter-pairs" },
     config = { "require('config.treesitter')" },
     loaded = true,
     only_config = true,
@@ -569,6 +565,11 @@ _G.packer_plugins = {
     path = "/home/slave/.local/share/nvim/site/pack/packer/opt/vim-tmux",
     url = "https://github.com/tmux-plugins/vim-tmux"
   },
+  vimtex = {
+    loaded = true,
+    path = "/home/slave/.local/share/nvim/site/pack/packer/start/vimtex",
+    url = "https://github.com/lervag/vimtex"
+  },
   ["vista.vim"] = {
     loaded = true,
     path = "/home/slave/.local/share/nvim/site/pack/packer/start/vista.vim",
@@ -595,10 +596,10 @@ time([[Defining packer_plugins]], false)
 time([[Setup for wilder.nvim]], true)
 vim.cmd('packadd wilder.nvim')
 time([[Setup for wilder.nvim]], false)
--- Config for: catppuccin
-time([[Config for catppuccin]], true)
-require('config.catppuccin')
-time([[Config for catppuccin]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+require('config.treesitter')
+time([[Config for nvim-treesitter]], false)
 -- Config for: nvim-cmp
 time([[Config for nvim-cmp]], true)
 require('config.nvim-cmp')
@@ -607,34 +608,46 @@ time([[Config for nvim-cmp]], false)
 time([[Config for nvim-surround]], true)
 try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\18nvim-surround\frequire\0", "config", "nvim-surround")
 time([[Config for nvim-surround]], false)
+-- Config for: rainbow-delimiters.nvim
+time([[Config for rainbow-delimiters.nvim]], true)
+require('config.rainbow')
+time([[Config for rainbow-delimiters.nvim]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 require('config.gitsigns')
 time([[Config for gitsigns.nvim]], false)
+-- Config for: vim-ai
+time([[Config for vim-ai]], true)
+require("config.vim-ai")
+time([[Config for vim-ai]], false)
 -- Config for: fidget.nvim
 time([[Config for fidget.nvim]], true)
 require('config.fidget')
 time([[Config for fidget.nvim]], false)
+-- Config for: diaglist.nvim
+time([[Config for diaglist.nvim]], true)
+try_loadstring("\27LJ\2\nR\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\ndebug\1\16debounce_ms\3–\1\tinit\rdiaglist\frequire\0", "config", "diaglist.nvim")
+time([[Config for diaglist.nvim]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 require('config.telescope')
 time([[Config for telescope.nvim]], false)
--- Config for: nvim-tree.lua
-time([[Config for nvim-tree.lua]], true)
- require('config.nvim-tree') 
-time([[Config for nvim-tree.lua]], false)
 -- Config for: indent-blankline.nvim
 time([[Config for indent-blankline.nvim]], true)
 try_loadstring("\27LJ\2\n7\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\28config.indent-blankline\frequire\0", "config", "indent-blankline.nvim")
 time([[Config for indent-blankline.nvim]], false)
--- Config for: diaglist.nvim
-time([[Config for diaglist.nvim]], true)
-try_loadstring("\27LJ\2\nR\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\16debounce_ms\3–\1\ndebug\1\tinit\rdiaglist\frequire\0", "config", "diaglist.nvim")
-time([[Config for diaglist.nvim]], false)
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-require('config.treesitter')
-time([[Config for nvim-treesitter]], false)
+-- Config for: nvim-tree.lua
+time([[Config for nvim-tree.lua]], true)
+ require('config.nvim-tree') 
+time([[Config for nvim-tree.lua]], false)
+-- Config for: catppuccin
+time([[Config for catppuccin]], true)
+require('config.catppuccin')
+time([[Config for catppuccin]], false)
+-- Config for: mason.nvim
+time([[Config for mason.nvim]], true)
+require('config.mason')
+time([[Config for mason.nvim]], false)
 -- Config for: nvim-notify
 time([[Config for nvim-notify]], true)
 require('config.nvim-notify')
@@ -647,66 +660,44 @@ time([[Config for scope.nvim]], false)
 time([[Config for nvim-lspconfig]], true)
 require('config.lspconfig')
 time([[Config for nvim-lspconfig]], false)
--- Config for: rainbow-delimiters.nvim
-time([[Config for rainbow-delimiters.nvim]], true)
-require('config.rainbow')
-time([[Config for rainbow-delimiters.nvim]], false)
--- Config for: vim-ai
-time([[Config for vim-ai]], true)
-require("config.vim-ai")
-time([[Config for vim-ai]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd nvim-treesitter-pairs ]]
-vim.cmd [[ packadd nvim-treesitter-refactor ]]
-vim.cmd [[ packadd nvim-treesitter-textobjects ]]
-vim.cmd [[ packadd playground ]]
-vim.cmd [[ packadd nvim-dap-virtual-text ]]
-
--- Config for: nvim-dap-virtual-text
-require('config.nvim-dap-virt')
-
+vim.cmd [[ packadd ultisnips ]]
+vim.cmd [[ packadd cmp-emoji ]]
+vim.cmd [[ packadd cmp-nvim-lua ]]
+vim.cmd [[ packadd cmp-path ]]
+vim.cmd [[ packadd cmp-cmdline ]]
+vim.cmd [[ packadd cmp-calc ]]
+vim.cmd [[ packadd cmp-nvim-lsp-signature-help ]]
+vim.cmd [[ packadd cmp-spell ]]
+vim.cmd [[ packadd cmp-look ]]
+vim.cmd [[ packadd cmp-buffer ]]
+vim.cmd [[ packadd cmp-omni ]]
+vim.cmd [[ packadd cmp-nvim-ultisnips ]]
 vim.cmd [[ packadd nvim-treesitter-context ]]
 
 -- Config for: nvim-treesitter-context
 require('config.ts-context')
 
-vim.cmd [[ packadd ultisnips ]]
-vim.cmd [[ packadd cmp-emoji ]]
-vim.cmd [[ packadd cmp-cmdline ]]
-vim.cmd [[ packadd cmp-spell ]]
-vim.cmd [[ packadd cmp-nvim-lsp-signature-help ]]
-vim.cmd [[ packadd cmp-omni ]]
-vim.cmd [[ packadd cmp-calc ]]
-vim.cmd [[ packadd cmp-buffer ]]
-vim.cmd [[ packadd cmp-look ]]
-vim.cmd [[ packadd cmp-nvim-lua ]]
-vim.cmd [[ packadd cmp-path ]]
-vim.cmd [[ packadd cmp-nvim-ultisnips ]]
+vim.cmd [[ packadd nvim-treesitter-refactor ]]
+vim.cmd [[ packadd nvim-dap-virtual-text ]]
+
+-- Config for: nvim-dap-virtual-text
+require('config.nvim-dap-virt')
+
+vim.cmd [[ packadd nvim-treesitter-pairs ]]
+vim.cmd [[ packadd nvim-treesitter-textobjects ]]
+vim.cmd [[ packadd playground ]]
 time([[Sequenced loading]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.api.nvim_create_user_command, 'Conflicted', function(cmdargs)
-          require('packer.load')({'vim-conflicted'}, { cmd = 'Conflicted', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
-        end,
-        {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'vim-conflicted'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('Conflicted ', 'cmdline')
-      end})
 pcall(vim.api.nvim_create_user_command, 'AsyncRun', function(cmdargs)
           require('packer.load')({'asyncrun.vim'}, { cmd = 'AsyncRun', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
         {nargs = '*', range = true, bang = true, complete = function()
           require('packer.load')({'asyncrun.vim'}, {}, _G.packer_plugins)
           return vim.fn.getcompletion('AsyncRun ', 'cmdline')
-      end})
-pcall(vim.api.nvim_create_user_command, 'Flog', function(cmdargs)
-          require('packer.load')({'vim-flog'}, { cmd = 'Flog', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
-        end,
-        {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'vim-flog'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('Flog ', 'cmdline')
       end})
 pcall(vim.api.nvim_create_user_command, 'MundoToggle', function(cmdargs)
           require('packer.load')({'vim-mundo'}, { cmd = 'MundoToggle', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
@@ -722,6 +713,20 @@ pcall(vim.api.nvim_create_user_command, 'MundoShow', function(cmdargs)
           require('packer.load')({'vim-mundo'}, {}, _G.packer_plugins)
           return vim.fn.getcompletion('MundoShow ', 'cmdline')
       end})
+pcall(vim.api.nvim_create_user_command, 'Flog', function(cmdargs)
+          require('packer.load')({'vim-flog'}, { cmd = 'Flog', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'vim-flog'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('Flog ', 'cmdline')
+      end})
+pcall(vim.api.nvim_create_user_command, 'Conflicted', function(cmdargs)
+          require('packer.load')({'vim-conflicted'}, { cmd = 'Conflicted', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'vim-conflicted'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('Conflicted ', 'cmdline')
+      end})
 time([[Defining lazy-load commands]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
@@ -729,15 +734,15 @@ vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
 vim.cmd [[au FileType vim ++once lua require("packer.load")({'asyncrun.vim'}, { ft = "vim" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType python ++once lua require("packer.load")({'vim-pythonsense', 'vim-python-pep8-indent'}, { ft = "python" }, _G.packer_plugins)]]
 vim.cmd [[au FileType tmux ++once lua require("packer.load")({'vim-tmux'}, { ft = "tmux" }, _G.packer_plugins)]]
+vim.cmd [[au FileType python ++once lua require("packer.load")({'vim-python-pep8-indent', 'vim-pythonsense'}, { ft = "python" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-preview.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'nvim-web-devicons', 'bufferline.nvim', 'lualine.nvim', 'vim-swap', 'vim-matchup', 'dashboard-nvim', 'vim-indent-object', 'which-key.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au User InGitRepo ++once lua require("packer.load")({'gitlinker.nvim', 'vim-fugitive'}, { event = "User InGitRepo" }, _G.packer_plugins)]]
 vim.cmd [[au BufEnter * ++once lua require("packer.load")({'nvim-colorizer.lua'}, { event = "BufEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au User InGitRepo ++once lua require("packer.load")({'vim-fugitive', 'gitlinker.nvim'}, { event = "User InGitRepo" }, _G.packer_plugins)]]
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'lualine.nvim', 'which-key.nvim', 'vim-swap', 'vim-matchup', 'dashboard-nvim', 'vim-indent-object', 'nvim-web-devicons', 'bufferline.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'delimitMate'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")

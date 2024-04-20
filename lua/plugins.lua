@@ -12,7 +12,7 @@ packer.startup({
     use({ "SirVer/ultisnips" })
     use({ "rafamadriz/friendly-snippets" })
 
-    use({ "williamboman/mason.nvim" })
+    use({ "williamboman/mason.nvim", config = [[require('config.mason')]]})
     use({ "williamboman/mason-lspconfig.nvim" })
 
     use({ "neovim/nvim-lspconfig", config = [[require('config.lspconfig')]] })
@@ -97,10 +97,6 @@ packer.startup({
 
     use({ "christoomey/vim-conflicted", requires = "tpope/vim-fugitive", cmd = "Conflicted" })
     use({ "dyng/ctrlsf.vim" })
-    use({
-      "junegunn/fzf.vim",
-      requires = { "junegunn/fzf", run = ":call fzf#install()" },
-    })
 
     use({ "folke/trouble.nvim", requires = "nvim-tree/nvim-web-devicons" })
 
@@ -199,6 +195,8 @@ packer.startup({
             })
         end
     })
+    use({'lervag/vimtex'})
+    use({'arkav/lualine-lsp-progress'})
   end,
   config = {
     max_jobs = 16,

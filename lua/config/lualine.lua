@@ -13,7 +13,7 @@ require('lualine').setup {
     sections = {
         lualine_a = {'mode'},
         lualine_b = {'branch', 'diff', 'diagnostics'},
-        lualine_c = {'filename'},
+        lualine_c = {'filename', 'lsp_progress'},
         lualine_x = {'encoding', 'fileformat'},
         lualine_y = {'filetype'},
         lualine_z = {{'os.date("%-I:%M %p")', color = {gui='NONE'}}}

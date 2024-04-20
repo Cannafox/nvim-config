@@ -122,3 +122,4 @@ g.neovide_cursor_vfx_mode = "pixiedust"
 set.swapfile = false
 g.python_host_prog = "/usr/bin/python"
 g.python3_host_prog = "/usr/bin/python3"
+g.vimtex_view_method = 'zathura'
