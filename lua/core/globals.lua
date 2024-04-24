@@ -4,7 +4,6 @@ local g = vim.g
 g.mapleader = ","
 g.maplocalleader = ","
 
-set.termguicolors = true
 set.tabstop = 4
 set.softtabstop = 4
 set.shiftwidth = 4
