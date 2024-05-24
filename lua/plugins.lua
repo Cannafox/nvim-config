@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -13,30 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugin_specs = {
     {"folke/neodev.nvim", opts={}},
-    "onsails/lspkind-nvim",
-    "mg979/vim-visual-multi",
-    { "SirVer/ultisnips", dependencies= {
-      "honza/vim-snippets",
-      "rafamadriz/friendly-snippets"
-      }, event = "InsertEnter"
-    },
-    -- {
-    --     "williamboman/mason.nvim",
-    --     config = function()
-    --         require('config.mason')
-    --     end,
-    -- },
-    -- "williamboman/mason-lspconfig.nvim",
-    {
-        'nvimdev/lspsaga.nvim',
-        config = function()
-            require('lspsaga').setup({})
-        end,
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter',
-            'nvim-tree/nvim-web-devicons'
-        }
-    },
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
@@ -63,9 +39,29 @@ local plugin_specs = {
             require('config.lspconfig')
         end,
     },
+    "onsails/lspkind-nvim",
+    "mg979/vim-visual-multi",
+    { "SirVer/ultisnips", dependencies= {
+      "honza/vim-snippets",
+      "rafamadriz/friendly-snippets"
+      }, event = "InsertEnter"
+    },
+    -- {
+    --     "williamboman/mason.nvim",
+    --     config = function()
+    --         require('config.mason')
+    --     end,
+    -- },
+    -- "williamboman/mason-lspconfig.nvim",
     {
-        "gelguy/wilder.nvim",
-        build = ":UpdateRemotePlugins"
+        'nvimdev/lspsaga.nvim',
+        config = function()
+            require('lspsaga').setup({})
+        end,
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+            'nvim-tree/nvim-web-devicons'
+        }
     },
     {
         "nvim-treesitter/nvim-treesitter",
@@ -98,18 +94,18 @@ local plugin_specs = {
         "machakann/vim-swap",
         event = "VeryLazy"
     },
-    "nvim-lua/plenary.nvim",
     {
       "nvim-telescope/telescope.nvim",
-        cmd = "Telescope",
-        dependencies = {
-            "nvim-telescope/telescope-symbols.nvim",
-            "nvim-telescope/telescope-fzf-native.nvim",
-            "nvim-telescope/telescope-file-browser.nvim"
-        },
-        config = function()
-            require("config.telescope")
-        end
+      tag = "0.1.8",
+      cmd = "Telescope",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope-symbols.nvim",
+        "nvim-telescope/telescope-file-browser.nvim"
+      },
+      config = function()
+          require("config.telescope")
+      end
     },
     {
         "kevinhwang91/nvim-hlslens",
@@ -276,7 +272,14 @@ local plugin_specs = {
     },
     'lervag/vimtex',
     'arkav/lualine-lsp-progress',
-    'averms/black-nvim'
+    'averms/black-nvim',
+    {
+        "gelguy/wilder.nvim",
+        build = ":UpdateRemotePlugins",
+        config = function()
+            require("config.wilder")
+        end,
+    }
 }
 local lazy_opts = {
     ui = {

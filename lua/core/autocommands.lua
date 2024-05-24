@@ -1,6 +1,5 @@
 local aucmd = vim.api.nvim_create_autocmd
 local augrp = vim.api.nvim_create_augroup
-
 augrp("ReloadOnChange", {clear = true})
 aucmd(
     {"FileChangedShellPost"},

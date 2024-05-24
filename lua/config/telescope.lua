@@ -21,13 +21,13 @@ require('telescope').setup{
     -- builtin picker
   },
   extensions = {
+    -- fzf = {
+    --   fuzzy = true,
+    --   override_generic_sorter = true,
+    --   override_file_sorter = true,
+    --   case_mode = "smart_case",
+    -- },
     "scope",
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = "smart_case",
-    },
     file_browser = {
       theme = "ivy",
       -- disables netrw and use telescope-file-browser in its place
@@ -43,6 +43,6 @@ require('telescope').setup{
     }
   }
 }
-require('telescope').load_extension('fzf')
+-- require('telescope').load_extension('fzf')
 require('telescope').load_extension('scope')
 require('telescope').load_extension('file_browser')

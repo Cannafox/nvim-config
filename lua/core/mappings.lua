@@ -67,7 +67,7 @@ keymap.set("n", "<S-Tab>", "<cmd>bprev<cr>")
 g.UltiSnipsExpandTrigger="<tab>"
 g.UltiSnipsJumpForwardTrigger="<c-n>"
 g.UltiSnipsJumpBackwardTrigger="<c-p>"
-g.UltiSnipsEnableSnipMate = 1
+g.UltiSnipsEnableSnipMate = 0
 g.UltiSnipsSnippetDirectories={'UltiSnips', 'my_snippets'}
 
 g.neovide_scale_factor = 1.0

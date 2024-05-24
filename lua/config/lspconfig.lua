@@ -7,7 +7,6 @@ local keymap = vim.keymap
 local fn = vim.fn
 local servers = {
   "bashls",
-  "clangd",
   "cmake",
   "autotools_ls",
   "diagnosticls",
@@ -121,6 +120,7 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+require("neodev").setup({})
 local lspconfig = require("lspconfig")
 
 local venv_path = os.getenv('VIRTUAL_ENV')
@@ -132,8 +132,6 @@ else
   py_path = vim.g.python3_host_prog
 end
 
-require("neodev").setup({})
-
 lspconfig.pylsp.setup {
   on_attach = custom_attach,
   settings = {
@@ -141,16 +139,16 @@ lspconfig.pylsp.setup {
       plugins = {
         -- formatter options
         black = { enabled = true },
-        autopep8 = { enabled = false },
+        autopep8 = { enabled = true },
         yapf = { enabled = false },
         -- linter options
-        pylint = { enabled = false, executable = "pylint" },
+        pylint = { enabled = true, executable = "pylint" },
         ruff = { enabled = false },
         pyflakes = { enabled = false },
         pycodestyle = { enabled = false },
         -- type checker
         pylsp_mypy = {
-          enabled = true,
+          enabled = false,
           overrides = { "--python-executable", py_path, true },
           report_progress = true,
           live_mode = false
@@ -177,14 +175,14 @@ lspconfig.pylsp.setup {
 --   vim.notify("pyright not found!", vim.log.levels.WARN, {title = 'Nvim-config'})
 -- end
 
-lspconfig.clangd.setup {
-  on_attach = custom_attach,
-  capabilities = capabilities,
-  filetypes = { "c", "cpp", "cc" },
-  flags = {
-    debounce_text_changes = 500,
-  },
-}
+-- lspconfig.clangd.setup {
+--   on_attach = custom_attach,
+--   capabilities = capabilities,
+--   filetypes = { "c", "cpp", "cc" },
+--   flags = {
+--     debounce_text_changes = 500,
+--   },
+-- }
 
 -- set up vim-language-server
 lspconfig.vimls.setup {
@@ -200,7 +198,35 @@ lspconfig.bashls.setup {
   on_attach = custom_attach,
   capabilities = capabilities,
 }
+lspconfig.diagnosticls.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
 
+lspconfig.autotools_ls.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
+lspconfig.cmake.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
+lspconfig.yamlls.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
+lspconfig.jsonls.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
+lspconfig.dotls.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
+lspconfig.dockerls.setup {
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
   -- settings for lua-language-server can be found on https://github.com/LuaLS/lua-language-server/wiki/Settings .
 lspconfig.lua_ls.setup {
   on_attach = custom_attach,
@@ -243,20 +269,21 @@ diagnostic.config {
   signs = true,
   severity_sort = true,
 }
-
+lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+})
 -- lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
---   underline = false,
---   virtual_text = false,
+--   underline = true,
+--   virtual_text = true,
 --   signs = true,
 --   update_in_insert = false,
 -- })
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
-lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-})
---   -- open quickfix by default
---   vim.cmd[[copen]]
+-- lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
+--   border = "rounded",
+-- })
+-- vim.cmd[[copen]]
 -- end
 -- api.nvim_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 -- api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
@@ -343,27 +370,22 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 --   capabilities = capabilities,
 -- })
 
--- lspconfig.clangd.setup({
---   on_attach = on_attach,
---   filetypes = { "c", "cpp", "cc" },
---   flags = {
---     debounce_text_changes = 500,
---   },
---   capabilities = capabilities,
--- })
+lspconfig.clangd.setup({
+  on_attach = custom_attach,
+  filetypes = { "c", "cpp", "cc" },
+  flags = {
+    debounce_text_changes = 500,
+  },
+  capabilities = capabilities,
+})
 
--- lspconfig.vimls.setup({
---   on_attach = on_attach,
---   flags = {
---     debounce_text_changes = 500,
---   },
---   capabilities = capabilities,
--- })
-
--- lspconfig.bashls.setup({
---   on_attach = on_attach,
---   capabilities = capabilities,
--- })
+lspconfig.vimls.setup({
+  on_attach = custom_attach,
+  flags = {
+    debounce_text_changes = 500,
+  },
+  capabilities = capabilities,
+})
 
 -- lspconfig.lua_ls.setup({
 --   on_init = function(client)
