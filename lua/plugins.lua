@@ -12,23 +12,21 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugin_specs = {
-    "folke/neodev.nvim",
+    {"folke/neodev.nvim", opts={}},
     "onsails/lspkind-nvim",
-    "SirVer/ultisnips",
-    "rafamadriz/friendly-snippets",
-    {
-        "williamboman/mason.nvim",
-        config = function()
-            require('config.mason')
-        end,
+    "mg979/vim-visual-multi",
+    { "SirVer/ultisnips", dependencies= {
+      "honza/vim-snippets",
+      "rafamadriz/friendly-snippets"
+      }, event = "InsertEnter"
     },
-    "williamboman/mason-lspconfig.nvim",
-    {
-        "neovim/nvim-lspconfig",
-        config = function()
-            require('config.lspconfig')
-        end,
-    },
+    -- {
+    --     "williamboman/mason.nvim",
+    --     config = function()
+    --         require('config.mason')
+    --     end,
+    -- },
+    -- "williamboman/mason-lspconfig.nvim",
     {
         'nvimdev/lspsaga.nvim',
         config = function()
@@ -59,12 +57,20 @@ local plugin_specs = {
         end,
     },
     {
+        "neovim/nvim-lspconfig",
+        event = { "BufRead", "BufNewFile" },
+        config = function()
+            require('config.lspconfig')
+        end,
+    },
+    {
         "gelguy/wilder.nvim",
         build = ":UpdateRemotePlugins"
     },
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
+        event = "VeryLazy",
         config = function()
             require('config.treesitter')
         end,
@@ -104,6 +110,19 @@ local plugin_specs = {
         config = function()
             require("config.telescope")
         end
+    },
+    {
+        "kevinhwang91/nvim-hlslens",
+        branch = "main",
+        keys = { "*", "#", "n", "N" },
+        config = function()
+            require("config.hlslens")
+        end,
+    },
+    {
+        "lukas-reineke/headlines.nvim",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        config = true, -- or `opts = {}`
     },
     {
         "tiagovla/scope.nvim",
@@ -166,6 +185,7 @@ local plugin_specs = {
     },
     {
         "nvimdev/dashboard-nvim",
+        event = "VimEnter",
         config = function()
             require("config.dashboard")
         end,
@@ -185,6 +205,7 @@ local plugin_specs = {
     },
     {
         "rcarriga/nvim-notify",
+        event = "VeryLazy",
         config = function()
             require('config.nvim-notify')
         end
@@ -198,11 +219,13 @@ local plugin_specs = {
     { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
     {
       "lukas-reineke/indent-blankline.nvim",
+      event = "VeryLazy",
       config = function()
         require("config.indent-blankline")
       end,
     },
     { "skywind3000/asyncrun.vim", lazy = true, cmd = { "AsyncRun" } },
+    { "cespare/vim-toml", ft = { "toml" }, branch = "main" },
     { "ii14/emmylua-nvim", ft = "lua" },
     {
         "j-hui/fidget.nvim",
@@ -220,6 +243,8 @@ local plugin_specs = {
             require('config.rainbow')
         end
     },
+    { "sindrets/diffview.nvim" },
+    { "wellle/targets.vim", event = "VeryLazy" },
     { "andymass/vim-matchup", event = "BufRead" },
     { "tpope/vim-scriptease", cmd = { "Scriptnames", "Message", "Verbose" } },
     { "tmux-plugins/vim-tmux", ft = { "tmux" } },
@@ -250,7 +275,8 @@ local plugin_specs = {
         end
     },
     'lervag/vimtex',
-    'arkav/lualine-lsp-progress'
+    'arkav/lualine-lsp-progress',
+    'averms/black-nvim'
 }
 local lazy_opts = {
     ui = {

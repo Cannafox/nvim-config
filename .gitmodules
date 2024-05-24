@@ -1,3 +1,0 @@
-[submodule "lua/lua/packer.nvim"]
-	path = lua/lua/packer.nvim
-	url = https://github.com/wbthomason/packer.nvim

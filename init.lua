@@ -3,16 +3,19 @@
 -- Byte compiling lua files to load them faster
 vim.loader.enable()
 
-local api = vim.api
 require("plugins")
 -- List with every config file
-local config_files = vim.split(vim.fn.glob("~/.config/nvim/lua/core/*.lua"), "\n")
-
--- Source all config files
-for _, path in ipairs(config_files) do
-  config_file_path = vim.fn.split(path, "/")
-  file = string.gsub(config_file_path[#config_file_path], "%.lua?$", "")
-  if file ~= "init" then
-    require("core." .. file)
-  end
+-- local core_config_files = vim.split(vim.fn.glob("~/.config/nvim/lua/core/*.lua"), "\n")
+local core_config_files = {
+  "autocommands.lua",
+  "colors.lua",
+  "functions.lua",
+  "globals.lua",
+  "options.lua",
+  "mappings.lua"
+}
+for _, fn in ipairs(core_config_files) do
+  local module_name, _ = "core/" .. string.gsub(fn, "%.lua", "")
+  package.loaded[module_name] = nil
+  require(module_name)
 end

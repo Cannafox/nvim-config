@@ -55,11 +55,11 @@ keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", {desc = "Telescope
 keymap.set("n", "<leader>fc", "<cmd>Telescope colorscheme<cr>", {desc = "Telescope colorscheme"})
 keymap.set("n", "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", {desc = "Telescope buffer fuzzy find"})
 
-keymap.set("n", "gaa", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git add .<cr>", {desc = "git add ."})
-keymap.set("n", "gpp", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git push<cr>", {desc = "git push"})
-keymap.set("n", "gcm", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git commit -m 'update $(VIM_FILEPATH)'<cr>", {desc = "git commit"})
-keymap.set("n", "gS", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git status<cr>", {desc = "git status"})
-keymap.set("n", "fid", "<cmd>FloatermNew --cwd=<root> --autoclose=0 --wintype=float --name=git --position=topright git diff<cr>", {desc = "git diff"})
+keymap.set("n", "gaa", "<cmd>FloatermNew --cwd=<root> --autoclose=1 --wintype=float --name=git --position=topright git add .<cr>", {desc = "git add ."})
+keymap.set("n", "gpp", "<cmd>FloatermNew --cwd=<root> --autoclose=1 --wintype=float --name=git --position=topright git push<cr>", {desc = "git push"})
+keymap.set("n", "gcm", "<cmd>FloatermNew --cwd=<root> --autoclose=1 --wintype=float --name=git --position=topright git commit -m 'update $(VIM_FILEPATH)'<cr>", {desc = "git commit"})
+keymap.set("n", "gS", "<cmd>FloatermNew --cwd=<root> --autoclose=1 --wintype=float --name=git --position=topright git status<cr>", {desc = "git status"})
+keymap.set("n", "fid", "<cmd>FloatermNew --cwd=<root> --autoclose=1 --wintype=float --name=git --position=topright git diff<cr>", {desc = "git diff"})
 
 keymap.set("n", "<leader>rp", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=$(VIM_FILEDIR) python $(VIM_FILEPATH)<cr>", {desc = "Run python"})
 keymap.set("n", "<Tab>", "<cmd>bnext<cr>")

@@ -34,15 +34,17 @@ cmp.setup({
         ["<Tab>"] = cmp.mapping(function(fallback) -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings for other snippet plugins
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif has_words_before() then
-                cmp.complete()
             else
                 fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+            -- elseif has_words_before() then
+            --     cmp.complete()
             end
         end, { "i", "s" }),
         ["<S-Tab>"] = cmp.mapping(function()
             if cmp.visible() then
                 cmp.select_prev_item()
+            else
+                fallback()
             end
         end, { "i", "s" }),
     }),
