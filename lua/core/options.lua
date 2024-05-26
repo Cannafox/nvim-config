@@ -1,5 +1,5 @@
 vim.scriptencoding = "utf-8"
--- vim.opt.termguicolors = true
+vim.opt.termguicolors = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.signcolumn = 'yes:2'
@@ -71,10 +71,11 @@ vim.opt.fillchars= {fold = " ", vert = "|", eob=" ", msgsep="‾"} -- "fold: ,ve
 vim.opt.fileencodings = { "utf-8", "ucs-bom", "utf-8", "cp936", "gb18030", "big5", "euc-jp", "euc-kr", "latin1" }
 vim.opt.diffopt = {"vertical", "filler", "closeoff", "context:3", "internal,indent-heuristic,algorithm:histogram", "linematch:60"}
 -- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- vim.opt.foldexpr = "tree sitter#foldexpr()"
 -- vim.opt.foldenable = false
 vim.opt.startofline = false
 vim.opt.visualbell = false
 
 vim.opt.wrap = false
 vim.opt.ruler = false
+vim.opt.autochdir = true

@@ -9,10 +9,10 @@ if not vim.uv.fs_stat(lazypath) then
     lazypath,
   })
 end
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend({lazypath})
 
 local plugin_specs = {
-    {"folke/neodev.nvim", opts={}},
+    -- {"folke/neodev.nvim", opts={}},
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
