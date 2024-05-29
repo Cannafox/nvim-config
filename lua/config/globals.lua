@@ -21,8 +21,8 @@ set_global.loaded_matchit = 1
 set_global.loaded_matchparen = 1
 
 set_global.asyncrun_rootmarks = {".svn", ".git", ".root", ".bzr", "_darcs", "build.xml"}
-set_global.floaterm_width = 100 
-set_global.floaterm_height = 80
+set_global.floaterm_width = 70 
+set_global.floaterm_height = 20
 
 set_global.vimtex_view_method = 'zathura'
 set_global.vimsyn_embed = "l"

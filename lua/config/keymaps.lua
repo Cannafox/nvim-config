@@ -1,6 +1,4 @@
 local keymap = vim.keymap
-local fn = vim.fn
-local api = vim.api
 local g = vim.g
 
 keymap.set("n", "<space>dW", "<cmd>lua require('diaglist').open_all_diagnostics()<cr>", { desc = "all diagnostics"})

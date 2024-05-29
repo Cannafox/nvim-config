@@ -1,16 +1,18 @@
-return {
-  {
-    "nvim-telescope/telescope.nvim",
-    version = false,
-    cmd = "Telescope",
-    dependencies = {
+local Plugin = {"nvim-telescope/telescope.nvim"}
+
+Plugin.version = false
+Plugin.cmd = "Telescope"
+Plugin.ft = {'mason'}
+
+Plugin.dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-symbols.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
       { "nvim-telescope/telescope-live-grep-args.nvim" , version = "~1.0.0"},
-    },
-    keys = {
+}
+
+Plugin.keys = {
       {
         "<Tab>",
         "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
@@ -59,47 +61,50 @@ return {
           })
         end,
         desc = "Goto Symbol (Workspace)",
-      },
-    },
-    opts = function()
-      require("telescope").load_extension("fzf")
-      require("telescope").load_extension("scope")
-      require("telescope").load_extension("live_grep_args")
-
-      local actions = require("telescope.actions")
-      local open_with_trouble = function(...)
-        return require("trouble.providers.telescope").open_with_trouble(...)
-      end
-      local open_selected_with_trouble = function(...)
-        return require("trouble.providers.telescope").open_selected_with_trouble(...)
-      end
-      local find_files_no_ignore = function()
-        local action_state = require("telescope.actions.state")
-        local line = action_state.get_current_line()
-        LazyVim.telescope("find_files", { no_ignore = true, default_text = line })()
-      end
-      local find_files_with_hidden = function()
-        local action_state = require("telescope.actions.state")
-        local line = action_state.get_current_line()
-        LazyVim.telescope("find_files", { hidden = true, default_text = line })()
-      end
-      local extensions = {
-        fzf = {
-          fuzzy = true,
-          override_generic_sorter = true,
-          override_file_sorter = true,
-          case_mode = "smart_case",
-        },
-        "scope",
-        file_browser = {
-          theme = "ivy",
-          hijack_netrw = true,
-          mappings = {
-            ["i"] = {},
-            ["n"] = {},
-          },
-        },
       }
-    end,
-  },
 }
+
+Plugin.opts = function()  
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = "smart_case",
+      },
+      "scope",
+      file_browser = {
+        theme = "ivy",
+        hijack_netrw = true,
+        mappings = {
+          ["i"] = {},
+          ["n"] = {},
+        },
+      },
+    }
+end
+function Plugin.config()
+    require("telescope").load_extension("fzf")
+    require("telescope").load_extension("scope")
+    require("telescope").load_extension("live_grep_args")
+
+    local actions = require("telescope.actions")
+    local open_with_trouble = function(...)
+      return require("trouble.providers.telescope").open_with_trouble(...)
+    end
+    local open_selected_with_trouble = function(...)
+      return require("trouble.providers.telescope").open_selected_with_trouble(...)
+    end
+    local find_files_no_ignore = function()
+      local action_state = require("telescope.actions.state")
+      local line = action_state.get_current_line()
+      LazyVim.telescope("find_files", { no_ignore = true, default_text = line })()
+    end
+    local find_files_with_hidden = function()
+      local action_state = require("telescope.actions.state")
+      local line = action_state.get_current_line()
+      LazyVim.telescope("find_files", { hidden = true, default_text = line })()
+    end
+end
+
+return Plugin
