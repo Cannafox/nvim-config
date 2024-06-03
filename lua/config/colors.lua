@@ -26,7 +26,7 @@ local colors = {
 -- Syntax
 api.nvim_set_hl(0, 'Italic', {})
 api.nvim_set_hl(0, 'Conditional', {fg=colors.blue, bold=true})
-api.nvim_set_hl(0, 'Comment', {fg=colors.darker_blue})
+api.nvim_set_hl(0, 'Comment', {fg=colors.darker_blue, bg=colors.background})
 api.nvim_set_hl(0, 'Boolean', {fg=colors.bright_blue})
 api.nvim_set_hl(0, 'Number', {fg=colors.bright_blue})
 api.nvim_set_hl(0, 'String', {fg=colors.bright_blue})
