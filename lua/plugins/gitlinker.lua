@@ -1,7 +1,7 @@
 local keymap = vim.keymap
 
 local Plugin = { "ruifm/gitlinker.nvim" }
-Plugin.event = "User InGitRepo"
+-- Plugin.event = "User InGitRepo"
 Plugin.opts = {
   callbacks = {
     ["dev.azure.com"] = function(url_data)

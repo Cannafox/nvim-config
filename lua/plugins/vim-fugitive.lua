@@ -2,7 +2,6 @@ local keymap = vim.keymap
 
 local Plugin = { "tpope/vim-fugitive" }
 
-Plugin.event = "User InGitRepo"
 Plugin.config = function()
   keymap.set("n", "<leader>gs", "<cmd>Git<cr>", { desc = "Git status" })
   keymap.set("n", "<leader>gw", "<cmd>Gwrite<cr>", { desc = "Git add" })
