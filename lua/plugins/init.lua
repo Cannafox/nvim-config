@@ -5,6 +5,7 @@ return {
   { "chrisbra/unicode.vim" },
   { "tpope/vim-commentary" },
   { "neomake/neomake" },
+  { "sbdchd/neoformat" },
   { "madox2/vim-ai" },
   { "averms/black-nvim" },
   { "dyng/ctrlsf.vim" },

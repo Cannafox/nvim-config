@@ -10,6 +10,15 @@ Plugin.dependencies = {
 Plugin.cmd = { "LspInfo", "LspInstall", "LspUninstall" }
 Plugin.event = { "BufReadPre", "BufNewFile" }
 
+local venv_path = os.getenv("VIRTUAL_ENV")
+local py_path = nil
+-- decide which python executable to use for mypy
+if venv_path ~= nil then
+  py_path = venv_path .. "/bin/python3"
+else
+  py_path = vim.g.python3_host_prog
+end
+
 Plugin.opts = {
   diagnostics = {
     underline = true,
@@ -43,7 +52,7 @@ Plugin.opts = {
   -- Be aware that you also will need to properly configure your LSP server to
   -- provide the code lenses.
   codelens = {
-    enabled = false,
+    enabled = true,
   },
   -- Enable lsp cursor word highlighting
   document_highlight = {
@@ -75,7 +84,7 @@ Plugin.opts = {
       cmd = {
         "java",
         "-jar",
-        "/home/master/resources/groovy-language-server/build/libs/groovy-language-server-all.jar",
+        "/home/lsave/sources/groovy-language-server/build/libs/groovy-language-server-all.jar",
       },
     },
     marksman = {},
@@ -93,16 +102,17 @@ Plugin.opts = {
             autopep8 = { enabled = false },
             yapf = { enabled = false },
             -- linter options
-            pylint = { enabled = true, executable = "pylint" },
-            ruff = { enabled = false },
+            pylint = { enabled = false },
+            ruff = { enabled = true },
+            rope_autoimport = { enabled = true, completions = { enabled = true }, code_actions = { enabled = true } },
             pyflakes = { enabled = false },
-            pycodestyle = { enabled = false },
+            pycodestyle = { enabled = true },
             -- type checker
             pylsp_mypy = {
               enabled = true,
-              overrides = { "--python-executable", vim.fn.exepath("python3"), true },
+              overrides = { "--python-executable", py_path, true },
               report_progress = true,
-              live_mode = false,
+              live_mode = true,
             },
             -- auto-completion options
             jedi_completion = { fuzzy = true },
@@ -212,7 +222,7 @@ Plugin.config = function(_, opts)
   if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
     opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
       or function(diagnostic)
-        local icons = require("lazyvim.config").icons.diagnostics
+        local icons = LazyVim.config.icons.diagnostics
         for d, icon in pairs(icons) do
           if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
             return icon
