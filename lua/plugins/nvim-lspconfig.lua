@@ -2,7 +2,6 @@ local Plugin = { "neovim/nvim-lspconfig" }
 
 Plugin.dependencies = {
   { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-  -- { "folke/neodev.nvim", opts = {} },
   "mason.nvim",
   { "hrsh7th/cmp-nvim-lsp" },
   "williamboman/mason-lspconfig.nvim",
@@ -52,7 +51,7 @@ Plugin.opts = {
   -- Be aware that you also will need to properly configure your LSP server to
   -- provide the code lenses.
   codelens = {
-    enabled = true,
+    enabled = false,
   },
   -- Enable lsp cursor word highlighting
   document_highlight = {
@@ -193,30 +192,27 @@ Plugin.config = function(_, opts)
     end
   end
 
-  if vim.fn.has("nvim-0.10") == 1 then
-    -- inlay hints
-    if opts.inlay_hints.enabled then
-      LazyVim.lsp.on_supports_method("textDocument/inlayHint", function(client, buffer)
-        if
-          vim.api.nvim_buf_is_valid(buffer)
-          and vim.bo[buffer].buftype == ""
-          and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
-        then
-          LazyVim.toggle.inlay_hints(buffer, true)
-        end
-      end)
-    end
+  if opts.inlay_hints.enabled then
+    LazyVim.lsp.on_supports_method("textDocument/inlayHint", function(client, buffer)
+      if
+        vim.api.nvim_buf_is_valid(buffer)
+        and vim.bo[buffer].buftype == ""
+        and not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[buffer].filetype)
+      then
+        LazyVim.toggle.inlay_hints(buffer, true)
+      end
+    end)
+  end
 
-    -- code lens
-    if opts.codelens.enabled and vim.lsp.codelens then
-      LazyVim.lsp.on_supports_method("textDocument/codeLens", function(client, buffer)
-        vim.lsp.codelens.refresh()
-        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-          buffer = buffer,
-          callback = vim.lsp.codelens.refresh,
-        })
-      end)
-    end
+  -- code lens
+  if opts.codelens.enabled and vim.lsp.codelens then
+    LazyVim.lsp.on_supports_method("textDocument/codeLens", function(client, buffer)
+      vim.lsp.codelens.refresh()
+      vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+        buffer = buffer,
+        callback = vim.lsp.codelens.refresh,
+      })
+    end)
   end
 
   if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then

@@ -4,7 +4,22 @@ local exclude_ft =
   { "help", "git", "markdown", "snippets", "text", "gitconfig", "alpha", "dashboard", "Trouble", "trouble", "lazy" }
 
 Plugin.main = "ibl"
-Plugin.opts = { enabled = true }
+Plugin.opts = {
+  enabled = true,
+  indent = {
+    -- -- U+2502 may also be a good choice, it will be on the middle of cursor.
+    -- -- U+250A is also a good choice
+    char = "▏",
+  },
+  scope = {
+    show_start = true,
+    show_end = true,
+  },
+  exclude = {
+    filetypes = exclude_ft,
+    buftypes = { "terminal" },
+  },
+}
 
 function Plugin.config(_, opts)
   local gid = vim.api.nvim_create_augroup("indent_blankline", { clear = true })

@@ -1,3 +1,5 @@
+local gs = require("gitsigns")
+
 local Plugin = { "lewis6991/gitsigns.nvim" }
 
 Plugin.opts = {
@@ -18,8 +20,6 @@ Plugin.opts = {
   },
   word_diff = true,
   on_attach = function(buffer)
-    local gs = package.loaded.gitsigns
-
     local function map(mode, l, r, desc)
       vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
     end
@@ -52,5 +52,8 @@ Plugin.opts = {
     map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
   end,
 }
+Plugin.config = function(_, opts)
+  gs.setup(opts)
+end
 
 return Plugin

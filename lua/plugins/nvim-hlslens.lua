@@ -1,10 +1,34 @@
-local Plugin = {"kevinhwang91/nvim-hlslens"}
+local Plugin = { "kevinhwang91/nvim-hlslens" }
+
+local kopts = { noremap = true, silent = true }
 
 Plugin.branch = "main"
-Plugin.keys = { "*", "#", "n", "N" }
 Plugin.opts = {
   calm_down = true,
-  nearest_only = true
+  nearest_only = true,
+  nearest_float_when = "always",
 }
+Plugin.config = function(_, opts)
+  vim.api.nvim_set_keymap(
+    "n",
+    "n",
+    [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    kopts
+  )
+  vim.api.nvim_set_keymap(
+    "n",
+    "N",
+    [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    kopts
+  )
+  vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+
+  vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>noh<CR>", kopts)
+
+  require("hlslens").setup(opts)
+end
 
 return Plugin
