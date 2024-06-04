@@ -1,9 +1,8 @@
-local Plugin = {"onsails/lspkind.nvim"}
+local Plugin = { "onsails/lspkind.nvim" }
 
-function Plugin.init()
-  mode = 'symbol_text'
-  preset = 'codicons'
-
+Plugin.opts = {
+  model = "symbol_text",
+  preset = "codicons",
   symbol_map = {
     Text = "󰉿",
     Method = "󰆧",
@@ -30,7 +29,10 @@ function Plugin.init()
     Event = "",
     Operator = "󰆕",
     TypeParameter = "",
-  }
+  },
+}
+Plugin.config = function(_, opts)
+  require("lspkind").init(opts)
 end
 
 return Plugin

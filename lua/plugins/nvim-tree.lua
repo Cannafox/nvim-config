@@ -27,7 +27,7 @@ Plugin.opts = {
         corner = "└ ",
         edge = "│ ",
         none = "  ",
-      }, 
+      },
     },
     icons = {
       webdev_colors = true,
@@ -101,20 +101,19 @@ Plugin.opts = {
       git = false,
       profile = false,
     },
-  },  
+  },
 }
 function Plugin.init()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 end
 
-function Plugin.config()
-  vim.keymap.set('n', '\\', '<cmd>NvimTreeOpen<cr>')
-  require('nvim-tree').setup(Plugin.opts)
+function Plugin.config(_, opts)
+  vim.keymap.set("n", "\\", "<cmd>NvimTreeOpen<cr>")
+  require("nvim-tree").setup(opts)
 end
 
 return Plugin
-
 
 -- local tab_win_closed = function(winnr)
 --   local api = require("nvim-tree.api")

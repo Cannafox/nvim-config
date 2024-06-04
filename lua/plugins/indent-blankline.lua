@@ -1,11 +1,12 @@
-local Plugin = {"lukas-reineke/indent-blankline.nvim"}
+local Plugin = { "lukas-reineke/indent-blankline.nvim" }
 
-local exclude_ft = { "help", "git", "markdown", "snippets", "text", "gitconfig", "alpha", "dashboard", "Trouble", "trouble", "lazy" }
-  
+local exclude_ft =
+  { "help", "git", "markdown", "snippets", "text", "gitconfig", "alpha", "dashboard", "Trouble", "trouble", "lazy" }
+
 Plugin.main = "ibl"
-Plugin.opts = {enabled = false}
+Plugin.opts = { enabled = true }
 
-function Plugin.config()
+function Plugin.config(_, opts)
   local gid = vim.api.nvim_create_augroup("indent_blankline", { clear = true })
   vim.api.nvim_create_autocmd("InsertEnter", {
     pattern = "*",
@@ -19,8 +20,9 @@ function Plugin.config()
       if not vim.tbl_contains(exclude_ft, vim.bo.filetype) then
         vim.cmd([[IBLEnable]])
       end
-    end})
-  require("ibl").setup({})
+    end,
+  })
+  require("ibl").setup(opts)
 end
 
 return Plugin

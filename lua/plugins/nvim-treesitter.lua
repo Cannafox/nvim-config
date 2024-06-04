@@ -1,14 +1,23 @@
-local Plugin ={"nvim-treesitter/nvim-treesitter"}
+local Plugin = { "nvim-treesitter/nvim-treesitter" }
 
 Plugin.version = false
 Plugin.build = ":TSUpdate"
-Plugin.event = { 'VeryLazy' }
+Plugin.event = { "VeryLazy" }
 Plugin.lazy = vim.fn.argc(-1) == 0
-Plugin.cmd = {"TSUpdateSync", "TSUpdate", "TSInstall"}
+Plugin.cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" }
 Plugin.keys = {
-    { "<c-space>", desc = "Increment Selection" },
-    { "<bs>", desc = "Decrement Selection", mode = "x" },
+  { "<c-space>", desc = "Increment Selection" },
+  { "<bs>", desc = "Decrement Selection", mode = "x" },
 }
+Plugin.init = function(plugin)
+  -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
+  -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
+  -- no longer trigger the **nvim-treesitter** module to be loaded in time.
+  -- Luckily, the only things that those plugins need are the custom queries, which we make available
+  -- during startup.
+  require("lazy.core.loader").add_to_rtp(plugin)
+  require("nvim-treesitter.query_predicates")
+end
 Plugin.opts = {
   ensure_installed = {
     "python",
@@ -23,7 +32,7 @@ Plugin.opts = {
   },
   auto_install = true,
   highlight = {
-    enable = false,
+    enable = true,
     -- disable = function(lang, buf)
     --   local max_filesize = 100 * 1024
     --   local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -140,26 +149,9 @@ Plugin.opts = {
   },
 }
 
-function dedup(list)
-  local ret = {}
-  local seen = {}
-  for _, v in ipairs(list) do
-    if not seen[v] then
-      table.insert(ret, v)
-      seen[v] = true
-    end
-  end
-  return ret
-end
-
-function Plugin.init(plugin)
-  require("lazy.core.loader").add_to_rtp(plugin)
-  require("nvim-treesitter.query_predicates")
-end
-
 function Plugin.config(_, opts)
   if type(opts.ensure_installed) == "table" then
-    opts.ensure_installed = dedup(opts.ensure_installed)
+    opts.ensure_installed = LazyVim.dedup(opts.ensure_installed)
   end
   require("nvim-treesitter.configs").setup(opts)
 end
