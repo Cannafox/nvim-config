@@ -2,7 +2,7 @@ local set_global = vim.g
 local set_optional = vim.opt
 
 set_optional.termguicolors = true
-set_global.autoformat = true
+set_global.autoformat = false
 set_global.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 set_global.lazygit_config = true
 set_global.deprecation_warnings = false
