@@ -11,6 +11,7 @@ return {
   { "neomake/neomake" },
   { "sbdchd/neoformat" },
   { "madox2/vim-ai" },
+  { "Bilal2453/luvit-meta", lazy = true },
   { "averms/black-nvim" },
   { "dyng/ctrlsf.vim" },
   { "skywind3000/asyncrun.vim" },

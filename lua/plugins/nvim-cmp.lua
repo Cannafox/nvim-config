@@ -40,6 +40,7 @@ Plugin.opts = function()
       { name = "path" },
       { name = "buffer", keyword_length = 3 },
       { name = "emoji", insert = true },
+      { name = "lazydev", group_index = 0 },
     },
     window = {
       completion = cmp.config.window.bordered(),

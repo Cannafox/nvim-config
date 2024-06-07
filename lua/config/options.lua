@@ -1,8 +1,9 @@
 local set_option = vim.opt
+local set_global = vim.g
 
 -- Font related
 vim.scriptencoding = "utf-8"
-set_option.guifont = "Iosevka Nerd Font Mono:style=Regular:h18"
+-- set_option.guifont = "Iosevka Nerd Font Mono:style=Regular:h18"
 set_option.encoding = "utf-8"
 set_option.fileencoding = "utf-8"
 
@@ -73,7 +74,8 @@ set_option.formatexpr = "v:lua.require'lazyvim.util'.format.formatexpr()"
 set_option.formatoptions = "jcroqlnt"
 vim.opt.fileformat = "unix"
 set_option.mouse = "a"
-vim.opt.mousescroll = "ver:2,hor:0"
+set_option.mousemodel = "popup"
+vim.opt.mousescroll = "ver:1,hor:0"
 set_option.linebreak = true
 set_option.showbreak = "↪"
 set_option.timeoutlen = 500
@@ -99,3 +101,44 @@ set_option.startofline = false
 set_option.wrap = false
 set_option.ruler = false
 set_option.autochdir = true
+set_option.visualbell = false
+set_option.errorbells = false
+set_global.logging_level = "info"
+
+set_option.termguicolors = true
+set_global.autoformat = false
+set_global.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
+set_global.lazygit_config = true
+set_global.deprecation_warnings = false
+
+-- IDE settings
+set_global.mapleader = ","
+set_global.maplocalleader = ","
+
+-- Provider settings
+set_global.python3_host_prog = vim.fn.exepath("python3")
+set_global.loaded_netrw = 1
+set_global.loaded_netrwPlugin = 1
+set_global.netrw_liststyle = 3
+set_global.loaded_zipPlugin = 1
+set_global.loaded_gzip = 1
+set_global.loaded_tarPlugin = 1
+-- if os.getenv("VIRTUAL_ENV") ~= nil then
+--   set_global.python3_host_prog = os.getenv("VIRTUAL_ENV") .. "/bin/python3"
+-- else
+--   set_global.python3_host_prog = vim.fn.exepath("python3")
+-- end
+set_global.loaded_perl_provider = 0
+set_global.loaded_ruby_provider = 0
+set_global.loaded_node_perl_provider = 0
+set_global.did_install_default_menus = 1
+set_global.loaded_matchit = 1
+set_global.loaded_matchparen = 1
+
+set_global.asyncrun_rootmarks = { ".svn", ".git", ".root", ".bzr", "_darcs", "build.xml" }
+set_global.floaterm_width = 70
+set_global.floaterm_height = 20
+
+set_global.vimtex_view_method = "zathura"
+set_global.vimsyn_embed = "l"
+set_global.loaded_sql_completion = 1

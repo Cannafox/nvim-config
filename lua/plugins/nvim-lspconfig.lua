@@ -51,7 +51,7 @@ Plugin.opts = {
   -- Be aware that you also will need to properly configure your LSP server to
   -- provide the code lenses.
   codelens = {
-    enabled = false,
+    enabled = true,
   },
   -- Enable lsp cursor word highlighting
   document_highlight = {
@@ -74,7 +74,6 @@ Plugin.opts = {
     timeout_ms = nil,
   },
   servers = {
-    autotools_ls = {},
     dotls = {},
     vimls = {},
     dockerls = {},
@@ -287,13 +286,13 @@ Plugin.config = function(_, opts)
     })
   end
 
-  if LazyVim.lsp.is_enabled("denols") and LazyVim.lsp.is_enabled("vtsls") then
-    local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-    LazyVim.lsp.disable("vtsls", is_deno)
-    LazyVim.lsp.disable("denols", function(root_dir)
-      return not is_deno(root_dir)
-    end)
-  end
+  -- if LazyVim.lsp.is_enabled("denols") and LazyVim.lsp.is_enabled("vtsls") then
+  --   local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
+  --   LazyVim.lsp.disable("vtsls", is_deno)
+  --   LazyVim.lsp.disable("denols", function(root_dir)
+  --     return not is_deno(root_dir)
+  --   end)
+  -- end
 end
 
 return Plugin

@@ -7,7 +7,6 @@ Plugin.keys = {
 }
 Plugin.opts = {
   ensure_installed = {
-    "autotools-language-server",
     "dot-language-server",
     "vim-language-server",
     "vint",

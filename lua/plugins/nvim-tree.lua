@@ -103,10 +103,6 @@ Plugin.opts = {
     },
   },
 }
-function Plugin.init()
-  vim.g.loaded_netrw = 1
-  vim.g.loaded_netrwPlugin = 1
-end
 
 function Plugin.config(_, opts)
   vim.keymap.set("n", "\\", "<cmd>NvimTreeOpen<cr>")
