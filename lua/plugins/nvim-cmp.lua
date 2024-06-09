@@ -1,93 +1,51 @@
-local cmp = require("cmp")
-
 local Plugin = { "hrsh7th/nvim-cmp" }
-
-Plugin.event = "InsertEnter"
 
 Plugin.dependencies = {
   { "hrsh7th/cmp-nvim-lsp" },
-  { "hrsh7th/cmp-emoji" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-path" },
+  { "hrsh7th/cmp-nvim-lsp-signature-help" },
+  { "saadparwaiz1/cmp_luasnip" },
   { "octaltree/cmp-look" },
   { "hrsh7th/cmp-nvim-lua" },
-  { "hrsh7th/cmp-path" },
-  { "hrsh7th/cmp-buffer" },
   { "hrsh7th/cmp-calc" },
+  { "petertriho/cmp-git" },
   { "hrsh7th/cmp-omni" },
-  { "saadparwaiz1/cmp_luasnip" },
-  { "hrsh7th/cmp-nvim-lsp-signature-help" },
   { "quangnguyen30192/cmp-nvim-ultisnips" },
-  { "L3MON4D3/LuaSnip" },
 }
-Plugin.opts = function()
-  vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
-  local luasnip = require("luasnip")
+Plugin.opts = {}
+Plugin.config = function()
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  end
+
+  local cmp = require('cmp')
+  local luasnip = require('luasnip')
   local lspkind = require("lspkind")
-  local defaults = require("cmp.config.default")()
-  require("luasnip.loaders.from_vscode").lazy_load()
 
-  local select_opts = { behavior = cmp.SelectBehavior.Select }
+  vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
-  return {
-    snippet = {
-      expand = function(args)
-        luasnip.lsp_expand(args.body)
-      end,
-    },
-    sources = {
-      { name = "nvim_lsp" },
-      { name = "ultisnips", keyword_length = 2 },
-      { name = "luasnip", keyword_length = 2 },
-      { name = "path" },
-      { name = "buffer", keyword_length = 3 },
-      { name = "emoji", insert = true },
-      { name = "lazydev", group_index = 0 },
-    },
+  local opts = {
+    enabled = function()
+      if require('cmp.config.context').in_treesitter_capture('comment') == true
+          or require('cmp.config.context').in_syntax_group('Comment') then
+        return false
+      else
+        return true
+      end
+    end,
     window = {
       completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered(),
     },
-    mapping = cmp.mapping.preset.insert({
-      ["<Up>"] = cmp.mapping.select_prev_item(select_opts),
-      ["<Down>"] = cmp.mapping.select_next_item(select_opts),
-
-      ["<C-Up>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-Down>"] = cmp.mapping.scroll_docs(4),
-
-      ["<C-f>"] = cmp.mapping(function(fallback)
-        if luasnip.jumpable(1) then
-          luasnip.jump(1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-
-      ["<C-b>"] = cmp.mapping(function(fallback)
-        if luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        local col = vim.fn.col(".") - 1
-
-        if cmp.visible() then
-          cmp.select_next_item(select_opts)
-        elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-          fallback()
-        else
-          cmp.complete()
-        end
-      end, { "i", "s" }),
-      ["<S-Tab>"] = cmp.mapping.select_prev_item(select_opts),
-      ["<CR>"] = cmp.mapping.confirm({ select = true }),
-      ["<C-e>"] = cmp.mapping.abort(),
-      ["<Esc>"] = cmp.mapping.close(),
-    }),
+    experimental = {
+      ghost_text = {
+        hl_group = "CmpGhostText",
+      },
+    },
     completion = {
-      keyword_length = 1,
-      completeopt = "menu,noselect",
+      completeopt = "menu,menuone,noinsert",
     },
     formatting = {
       fields = { "menu", "abbr", "kind" },
@@ -98,15 +56,81 @@ Plugin.opts = function()
         show_labelDetails = true,
       }),
     },
-    experimental = {
-      ghost_text = {
-        hl_group = "CmpGhostText",
-      },
+    preselect = cmp.PreselectMode.Item,
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
     },
-    sorting = defaults.sorting,
+    sources = {
+      { name = "nvim_lsp", priority = 50 },
+      { name = "ultisnips", priority = 100, keyword_length = 2 },
+      { name = "luasnip", priority = 100, keyword_length = 2 },
+      { name = "path", priority = 99 },
+      { name = "git" },
+      { name = "buffer", priority = 50, max_item_count = 5, keyword_length = 3 },
+      { name = 'nvim_lsp_signature_help', priority = 50 },
+    },
+    -- sorting = {
+    --   cmp.config.compare.locality,
+    --   cmp.config.compare.recently_used,
+    --   cmp.config.compare.score,
+    --   cmp.config.compare.offset,
+    --   cmp.config.compare.order,
+    -- },
+    matching = {
+      disallow_fuzzy_matching = true,
+      disallow_fullfuzzy_matching = true,
+      disallow_partial_fuzzy_matching = false,
+      disallow_partial_matching = false,
+      disallow_prefix_unmatching = true,
+    },
+    mapping = cmp.mapping.preset.insert({
+      -- ["<Up>"] = cmp.mapping.select_prev_item(select_opts),
+      -- ["<Down>"] = cmp.mapping.select_next_item(select_opts),
+      --
+      -- ["<C-Up>"] = cmp.mapping.scroll_docs(-4),
+      -- ["<C-Down>"] = cmp.mapping.scroll_docs(4),
+      --
+      ["<C-f>"] = cmp.mapping(function(fallback)
+        if luasnip.jumpable(1) then
+          luasnip.jump(1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+      ["<C-b>"] = cmp.mapping(function(fallback)
+        if luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+        else
+            fallback()
+        end
+      end, { 'i', 's' }),
+      ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<Esc>"] = cmp.mapping.close()
+    })
   }
-end
-Plugin.config = function(_, opts)
   cmp.setup(opts)
 end
 

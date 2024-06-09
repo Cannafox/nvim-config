@@ -1,11 +1,11 @@
 local Plugin = {"nvim-telescope/telescope.nvim"}
 
-Plugin.version = false
 Plugin.cmd = "Telescope"
 
 Plugin.dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-symbols.nvim",
+      {"tiagovla/scope.nvim", opts = {}},
       "nvim-telescope/telescope-file-browser.nvim",
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
       { "nvim-telescope/telescope-live-grep-args.nvim" , version = "~1.0.0"},
@@ -69,6 +69,78 @@ Plugin.keys = {
   }
 
 Plugin.opts = {
+    defaults = {
+      layout_strategy = 'horizontal',
+      layout_config = {
+          horizontal = {
+              prompt_position = 'bottom',
+              preview_width = 0.55,
+              results_width = 0.8,
+          },
+          vertical = { mirror = false },
+          width = 0.87,
+          height = 0.80,
+          preview_cutoff = 120,
+      },
+      sorting_strategy = 'ascending',
+      prompt_prefix = '> ',
+      selection_caret = ' ',
+      winblend = 0,
+      file_ignore_patterns = {
+          'vendor/*',
+          '%.lock',
+          '__pycache__/*',
+          '%.sqlite3',
+          '%.ipynb',
+          'node_modules/*',
+          '%.jpg',
+          '%.jpeg',
+          '%.png',
+          '%.svg',
+          '%.otf',
+          '%.ttf',
+          '.git/',
+          '%.webp',
+          '.dart_tool/',
+          '.github/',
+          '.gradle/',
+          '.idea/',
+          '.settings/',
+          '.vscode/',
+          '__pycache__/',
+          'build/',
+          'env/',
+          'gradle/',
+          'node_modules/',
+          'target/',
+          '%.pdb',
+          '%.dll',
+          '%.class',
+          '%.exe',
+          '%.cache',
+          '%.ico',
+          '%.pdf',
+          '%.dylib',
+          '%.jar',
+          '%.docx',
+          '%.met',
+          'smalljre_*/*',
+          '.vale/',
+          '%.burp',
+          '%.mp4',
+          '%.mkv',
+          '%.rar',
+          '%.zip',
+          '%.7z',
+          '%.tar',
+          '%.bz2',
+          '%.epub',
+          '%.flac',
+          '%.tar.gz',
+          '%.css',
+          '%.js',
+      },
+    },
     extensions = {
       fzf = {
         fuzzy = true,
@@ -87,12 +159,7 @@ Plugin.opts = {
       },
     }
 }
-function Plugin.config()
-    require("telescope").load_extension("fzf")
-    require("telescope").load_extension("scope")
-    require("telescope").load_extension("live_grep_args")
-    local actions = require('telescope.actions')
-
+Plugin.config = function(_, opts)
     local open_with_trouble = require("trouble.sources.telescope").open
     local find_files_no_ignore = function()
       local action_state = require("telescope.actions.state")
@@ -104,41 +171,11 @@ function Plugin.config()
       local line = action_state.get_current_line()
       require('telescope.builtin').find_files({ hidden = true, default_text = line })
     end
-    local opts = {
-      defaults = {
-          prompt_prefix = " ",
-          selection_caret = " ",
-          -- open files in the first window that is an actual file.
-          -- use the current window if no other window is available.
-          get_selection_window = function()
-            local wins = vim.api.nvim_list_wins()
-            table.insert(wins, 1, vim.api.nvim_get_current_win())
-            for _, win in ipairs(wins) do
-              local buf = vim.api.nvim_win_get_buf(win)
-              if vim.bo[buf].buftype == "" then
-                return win
-              end
-            end
-            return 0
-          end,
-          mappings = {
-            i = {
-              ["<c-t>"] = open_with_trouble,
-              ["<a-t>"] = open_with_trouble,
-              ["<a-i>"] = find_files_no_ignore,
-              ["<a-h>"] = find_files_with_hidden,
-              ["<C-Down>"] = actions.cycle_history_next,
-              ["<C-Up>"] = actions.cycle_history_prev,
-              ["<C-f>"] = actions.preview_scrolling_down,
-              ["<C-b>"] = actions.preview_scrolling_up,
-            },
-            n = {
-              ["q"] = actions.close,
-            },
-          },
-        },
-    }
-  require('telescope').setup(opts)
+    require('telescope').setup(opts)
+    require("telescope").load_extension("fzf")
+    -- require("telescope").load_extension("fzy_native")
+    require("telescope").load_extension("scope")
+    require("telescope").load_extension("live_grep_args")
 end
 
 return Plugin

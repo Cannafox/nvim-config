@@ -44,8 +44,6 @@ function Plugin.config()
       enable = false,
     },
   })
-
-  vim.notify = require('mini.notify').make_notify()
 end
 
 return Plugin

@@ -1,6 +1,6 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -10,22 +10,32 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     lazypath,
   })
 end
-vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
+vim.opt.rtp:prepend(lazypath)
+
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.4/?/init.lua;"
+package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.4/?.lua;"
+
 require("lazy").setup({
   spec = {
-      {"LazyVim/LazyVim", import = "lazyvim.plugins"},
+    {"LazyVim/LazyVim", import = "lazyvim.plugins", news = {colorscheme = "catppuccin", lazyvim = true, neovim = true}},
     { import = "plugins" },
   },
   defaults = {
-    lazy = false,
+    lazy = true,
     version = false, -- always use the latest git commit
   },
   install = { colorscheme = { "catppuccin" } },
   checker = { enabled = true },
   performance = {
+    cache = {
+      enabled = true
+    },
     rtp = {
       disabled_plugins = {
         "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
