@@ -51,7 +51,6 @@ set_option.listchars = {
 }
 set_option.number = true
 set_option.relativenumber = true
-set_option.completeopt = "menu,menuone,noselect"
 -- vim.opy.complete:remove({'w', 'b', 'u', 't'})
 -- set_option.complete+=kspell complete-=w complete-=b complete-=u complete-=t
 set_option.pumheight = 10
@@ -79,23 +78,15 @@ vim.opt.mousescroll = "ver:1,hor:0"
 set_option.linebreak = true
 set_option.showbreak = "↪"
 set_option.timeoutlen = 500
-set_option.fillchars = {
-  foldopen = "",
-  foldclose = "",
-  fold = " ",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
-} -- "fold: ,vert:│,eob: ,msgsep:‾,diff:"
 set_option.fileencodings = { "utf-8", "ucs-bom", "utf-8", "cp936", "gb18030", "big5", "euc-jp", "euc-kr", "latin1" }
 set_option.diffopt =
   { "vertical", "filler", "closeoff", "context:3", "internal,indent-heuristic,algorithm:histogram", "linematch:60" }
 set_option.conceallevel = 2
 set_option.cursorline = true
-set_option.foldlevel = 99
-set_option.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
-set_option.foldmethod = "expr"
-set_option.foldtext = ""
+-- set_option.foldlevel = 99
+-- set_option.foldexpr =  -- "v:lua.require'lazyvim.util'.ui.foldexpr()"
+-- set_option.foldmethod = "expr"
+-- set_option.foldtext = ""
 set_option.startofline = false
 
 set_option.wrap = false
@@ -108,6 +99,8 @@ set_global.logging_level = "info"
 set_option.termguicolors = true
 set_global.autoformat = false
 set_global.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
+set_global.lazyvim_python_lsp = "pylsp"
+set_global.lazyvim_python_ruff = "ruff"
 set_global.lazygit_config = true
 set_global.deprecation_warnings = false
 
@@ -116,7 +109,8 @@ set_global.mapleader = ","
 set_global.maplocalleader = ","
 
 -- Provider settings
-set_global.python3_host_prog = vim.fn.exepath("python3")
+set_global.python3_host_prog = "/home/slave/.pyenv/versions/3.10.14/envs/neovim/bin/python3"
+-- set_global.python_host_prog = "/home/slave/.pyenv/versions/3.10.14/envs/neovim/bin/python"
 set_global.loaded_netrw = 1
 set_global.loaded_netrwPlugin = 1
 set_global.netrw_liststyle = 3
@@ -136,6 +130,7 @@ set_global.loaded_matchit = 1
 set_global.loaded_matchparen = 1
 
 set_global.asyncrun_rootmarks = { ".svn", ".git", ".root", ".bzr", "_darcs", "build.xml" }
+set_global.asyncrun_open = 4
 set_global.floaterm_width = 70
 set_global.floaterm_height = 20
 

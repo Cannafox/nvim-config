@@ -5,6 +5,7 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
+
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),
@@ -39,41 +40,41 @@ aucmd(
     }
 )
 
-augrp("YankHighlight", {clear = true})
-aucmd(
-    "TextYankPost",
-    {
-        group = "YankHighlight",
-        callback = function()
-            vim.highlight.on_yank({higroup = "IncSearch", timeout = "1000"})
-        end
-    }
-)
-
-augrp("RestoreAfterYank", {clear = true})
-aucmd(
-    "TextYankPost",
-    {
-        pattern = "*",
-        group = "RestoreAfterYank",
-        callback = function()
-            vim.cmd([[
-      silent! normal! `y
-      silent! delmarks y
-    ]])
-        end
-    }
-)
-
--- augrp("TrailSpaceOnSave", {clear = true})
+-- augrp("YankHighlight", {clear = true})
 -- aucmd(
---     "BufWritePre",
+--     "TextYankPost",
 --     {
---         group = "TrailSpaceOnSave",
---         pattern = "",
---         command = ":%s/\\s\\+$//e"
+--         group = "YankHighlight",
+--         callback = function()
+--             vim.highlight.on_yank({higroup = "IncSearch", timeout = "1000"})
+--         end
 --     }
 -- )
+
+-- augrp("RestoreAfterYank", {clear = true})
+-- aucmd(
+--     "TextYankPost",
+--     {
+--         pattern = "*",
+--         group = "RestoreAfterYank",
+--         callback = function()
+--             vim.cmd([[
+--       silent! normal! `y
+--       silent! delmarks y
+--     ]])
+--         end
+--     }
+-- )
+
+augrp("TrailSpaceOnSave", {clear = true})
+aucmd(
+    "BufWritePre",
+    {
+        group = "TrailSpaceOnSave",
+        pattern = "",
+        command = ":%s/\\s\\+$//e"
+    }
+)
 
 augrp("DontAutoCommentNLines", {clear = true})
 aucmd(
@@ -123,13 +124,13 @@ aucmd(
         command = "startinsert"
     }
 )
-augrp("termInsertMode", {clear = true})
+augrp("termResize", {clear = true})
 aucmd(
     {"TermOpen"},
     {
-        group = "termInsertMode",
+        group = "termResize",
         pattern = "*",
-        command = "startinsert"
+        command = "resize 2",
     }
 )
 
@@ -177,15 +178,5 @@ aucmd(
         pattern = "*",
         group = "dynamic_smartcase",
         command = "set smartcase"
-    }
-)
-
-augrp("acc_syntax_hl", {clear = true})
-aucmd(
-    {"BufEnter"},
-    {
-        pattern = "*",
-        group = "acc_syntax_hl",
-        command = "syntax sync fromstart"
     }
 )

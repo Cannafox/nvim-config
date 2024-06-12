@@ -60,13 +60,13 @@ keymap.set("n", "gS", "<cmd>FloatermNew --cwd=<root> --autoclose=1 --wintype=flo
 keymap.set("n", "fid", "<cmd>FloatermNew --cwd=<root> --autoclose=1 --wintype=float --name=git --position=topright git diff<cr>", {desc = "git diff"})
 
 keymap.set("n", "<leader>rp", "<cmd>AsyncRun -mode=term -pos=floaterm -cwd=$(VIM_FILEDIR) python $(VIM_FILEPATH)<cr>", {desc = "Run python"})
-keymap.set("n", "<Tab>", "<cmd>bnext<cr>")
-keymap.set("n", "<S-Tab>", "<cmd>bprev<cr>")
-g.UltiSnipsExpandTrigger="<tab>"
-g.UltiSnipsJumpForwardTrigger="<c-n>"
-g.UltiSnipsJumpBackwardTrigger="<c-p>"
-g.UltiSnipsEnableSnipMate = 0
-g.UltiSnipsSnippetDirectories={'UltiSnips', 'my_snippets'}
+keymap.set("n", "C-Right", "<cmd>bnext<cr>")
+keymap.set("n", "<C-Left>", "<cmd>bprev<cr>")
+-- g.UltiSnipsExpandTrigger="<tab>"
+-- g.UltiSnipsJumpForwardTrigger="<c-n>"
+-- g.UltiSnipsJumpBackwardTrigger="<c-p>"
+-- g.UltiSnipsEnableSnipMate = 0
+-- g.UltiSnipsSnippetDirectories={'UltiSnips', 'my_snippets'}
 
 g.neovide_scale_factor = 1.0
 local change_scale_factor = function(delta)
